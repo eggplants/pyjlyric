@@ -1,0 +1,76 @@
+# poetry self add poetry-bumpversion
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = [
+  "poetry-core",
+]
+
+[tool]
+[tool.black]
+line-length = 120
+target-version = ['py39']
+
+[tool.isort]
+profile = "black"
+
+[tool.mypy]
+pretty = true
+python_version = "3.10"
+show_error_codes = true
+strict = true
+
+[tool.ruff]
+select = ["ALL"]
+ignore = [
+  "TID252", # Relative imports from parent modules are banned
+  "D",
+]
+
+[tool.ruff.mccabe]
+max-complexity = 18
+
+[tool.ruff.per-file-ignores]
+"models.py" = [
+  # https://github.com/pydantic/pydantic/issues/2597#issuecomment-1086194186
+  "UP006", # Use `tuple`/`list` instead of `Tuple`/`List`
+  "UP007", # Use `X | Y` for type annotations
+]
+
+[tool.poetry]
+authors = ["eggplants <w10776e8w@yahoo.co.jp>"]
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only"
+]
+description = "Japanese Lyric Extractor / Lyric Site Aggregator"
+keywords = ["sample-project"]
+name = "pyjlyric"
+packages = [{include = "pyjlyric"}]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/eggplants/pyjlyric"
+version = "0.0.5"
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.12"
+pydantic = "^1.10.5"
+typing-extensions = "^4.5.0"
+requests = "^2.28.2"
+beautifulsoup4 = "^4.11.2"
+lxml = "^4.9.2"
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^0.991"
+pre-commit = "^2.20.0"
+taskipy = "^1.10.3"
+
+[tool.poetry.scripts]
+jrc = "pyjlyric.main:main"
+
+[tool.poetry_bumpversion.file."pyjlyric/__init__.py"]
+
+[tool.taskipy.tasks]
+lint = "pre-commit run -a"
+profile = "python -m cProfile"
