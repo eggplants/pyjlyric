@@ -52,7 +52,7 @@ packages = [{include = "pyjlyric"}]
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/eggplants/pyjlyric"
-version = "0.0.5"
+version = "0.0.0"
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.12"
