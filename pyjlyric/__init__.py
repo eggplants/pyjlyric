@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 from .jlyric.parser import JlyricLyricPageParser
 from .kashinavi.parser import KashinaviLyricPageParser
 from .utanet.parser import UtanetLyricPageParser
+from .utaten.parser import UtatenLyricPageParser
 
 if TYPE_CHECKING:
     from pyjlyric.models import LyricPage
@@ -18,6 +19,7 @@ Parsers: tuple[type[BaseLyricPageParser], ...] = (
     KashinaviLyricPageParser,
     JlyricLyricPageParser,
     UtanetLyricPageParser,
+    UtatenLyricPageParser,
 )
 
 
