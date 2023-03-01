@@ -31,8 +31,8 @@ class KashinaviLyricPageParser(BaseLyricPageParser):
         """Parse the url page and return the result as LyricPage instance."""
         pattern = re.compile(_KASHINAVI_PATTERN)
         m = re.match(pattern, url)
-        val = get_captured_value(m, "pageid")
-        if val is None:
+        pageid = get_captured_value(m, "pageid")
+        if pageid is None:
             raise KashinaviLyricPageParserError from ValueError
 
         bs = get_source(url)
@@ -49,7 +49,7 @@ class KashinaviLyricPageParser(BaseLyricPageParser):
         return LyricPage(
             title=jsonld.name,
             page_url=parse_obj_as_url(url),
-            pageid=val,
+            pageid=pageid,
             artist=WithUrlText(link=artist.url, text=artist.name),
             composers=[WithUrlText(text=jsonld.composer.name, link=None)],
             lyricists=[WithUrlText(text=jsonld.lyricist.name, link=None)],

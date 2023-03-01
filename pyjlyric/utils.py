@@ -64,7 +64,7 @@ def get_source(url: str) -> BeautifulSoup | None:
     return BeautifulSoup(markup=res.content, features="lxml")
 
 
-def select_one_tag(bs: BeautifulSoup, selector: str) -> Tag:
+def select_one_tag(bs: BeautifulSoup | Tag, selector: str) -> Tag:
     """WIP."""
     res = bs.select_one(selector)
 

@@ -1,4 +1,4 @@
-"""<https://kashinavi.com>"""
+"""<https://l-lyric.net>"""
 
 import re
 from urllib.parse import urljoin
@@ -32,8 +32,8 @@ class JlyricLyricPageParser(BaseLyricPageParser):
         """Parse the url page and return the result as LyricPage instance."""
         pattern = re.compile(_JLYRIC_PATTERN)
         m = re.match(pattern, url)
-        val = get_captured_value(m, "pageid")
-        if val is None:
+        pageid = get_captured_value(m, "pageid")
+        if pageid is None:
             raise JlyricLyricPageParserError from ValueError
 
         bs = get_source(url)
@@ -54,13 +54,13 @@ class JlyricLyricPageParser(BaseLyricPageParser):
             )
         )
 
-        composer = select_one_tag(bs, "#mnb > div.lbdy > p:nth-child(2)")
-        composer_m = re.match("^作詞\uff1a(.*)$", composer.text)
+        composer = select_one_tag(bs, "#mnb > div.lbdy > p:nth-child(3)")
+        composer_m = re.match("^作曲\uff1a(.*)$", composer.text)
         if composer_m is None or len(composer_m.groups()) != 1:
             raise JlyricLyricPageParserError from ValueError
 
-        lyricist = select_one_tag(bs, "#mnb > div.lbdy > p:nth-child(3)")
-        lyricist_m = re.match("^作曲\uff1a(.*)$", lyricist.text)
+        lyricist = select_one_tag(bs, "#mnb > div.lbdy > p:nth-child(2)")
+        lyricist_m = re.match("^作詞\uff1a(.*)$", lyricist.text)
         if lyricist_m is None or len(lyricist_m.groups()) != 1:
             raise JlyricLyricPageParserError from ValueError
 
@@ -71,7 +71,7 @@ class JlyricLyricPageParser(BaseLyricPageParser):
         return LyricPage(
             title=title_m.groups()[0],
             page_url=parse_obj_as_url(url),
-            pageid=val,
+            pageid=pageid,
             artist=WithUrlText(link=artist_link, text=artist.text),
             composers=[
                 WithUrlText(text=str(composer_name), link=None) for composer_name in composer_m.groups()[0].split("・")
