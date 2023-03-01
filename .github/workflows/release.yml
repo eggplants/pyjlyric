@@ -1,7 +1,7 @@
 name: Release Package
 
 # need to setup:
-# secrets.PYPI_PASSWORD (See: https://pypi.org/help/#apitoken)
+# secrets.PYPI_TOKEN (See: https://pypi.org/help/#apitoken)
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
     - v*
 env:
   PYTHON_VERSION: '3.11'
-  PROJECT_NAME: my_best_python_project
+  PROJECT_NAME: pyjlyric
 
 jobs:
   release:
