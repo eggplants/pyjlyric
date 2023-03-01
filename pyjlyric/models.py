@@ -22,8 +22,8 @@ class LyricPage(BaseModel):
     pageid: str
 
     artist: WithUrlText
-    composer: List[WithUrlText]
-    lyricist: List[WithUrlText]
-    arranger: Optional[List[WithUrlText]]
+    composers: List[WithUrlText]
+    lyricists: List[WithUrlText]
+    arrangers: Optional[List[WithUrlText]]
 
-    lyric: List[_LyricSection]
+    lyric_sections: List[_LyricSection]

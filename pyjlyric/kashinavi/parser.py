@@ -17,7 +17,7 @@ class KashinaviLyricPageParserError(BaseLyricPageParserError):
 
 
 class KashinaviLyricPageParser(BaseLyricPageParser):
-    """<https://kashinavi.com/song_view.html?...>"""
+    """https://kashinavi.com/song_view.html?<pageid>"""
 
     @staticmethod
     def is_valid_url(url: str) -> bool:
@@ -44,11 +44,6 @@ class KashinaviLyricPageParser(BaseLyricPageParser):
         jsonld_source = jsonld_tag.text
         jsonld = JSONLD.parse_raw(jsonld_source)
 
-        lyrics = [
-            [i.text for i in section.children if isinstance(i, NavigableString)]
-            for section in BeautifulSoup(jsonld.lyrics.text, "lxml").find_all("p")
-        ]
-
         artist = jsonld.recorded_as.by_artist
 
         return LyricPage(
@@ -56,8 +51,11 @@ class KashinaviLyricPageParser(BaseLyricPageParser):
             page_url=parse_obj_as_url(url),
             pageid=val,
             artist=WithUrlText(link=artist.url, text=artist.name),
-            composer=[WithUrlText(text=jsonld.composer.name, link=None)],
-            lyricist=[WithUrlText(text=jsonld.lyricist.name, link=None)],
-            arranger=None,
-            lyric=lyrics,
+            composers=[WithUrlText(text=jsonld.composer.name, link=None)],
+            lyricists=[WithUrlText(text=jsonld.lyricist.name, link=None)],
+            arrangers=None,
+            lyric_sections=[
+                [i.text for i in section.children if isinstance(i, NavigableString)]
+                for section in BeautifulSoup(jsonld.lyrics.text, "lxml").find_all("p")
+            ],
         )

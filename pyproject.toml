@@ -26,6 +26,7 @@ ignore = [
   "TID252", # Relative imports from parent modules are banned
   "D",
 ]
+line-length = 120
 
 [tool.ruff.mccabe]
 max-complexity = 18

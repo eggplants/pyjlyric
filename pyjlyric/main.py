@@ -30,12 +30,10 @@ def parse_args() -> Namespace:
     -------
         Namespace: argparse.Namespace
     """
-    usage = textwrap.dedent(
-        f"""
-    supported sites:
-        - {f'{linesep}- '.join([str(parser.__doc__) for parser in Parsers])}
-    """,
-    )
+    usage = [
+        "supported sites:",
+        *[str(parser.__doc__) for parser in Parsers],
+    ]
 
     parser = ArgumentParser(
         prog="jrc",
@@ -47,7 +45,7 @@ def parse_args() -> Namespace:
                 max_help_position=40,
             )
         ),
-        epilog=usage,
+        epilog="\n  - ".join(usage),
     )
     parser.add_argument(
         "url",
@@ -69,9 +67,9 @@ def main() -> int:
     if r is None:
         return 1
 
-    lyric_sections = [linesep.join(paragraph) + linesep for paragraph in r.lyric]
-    lyricist_names = [i.text for i in r.lyricist]
-    composer_names = [i.text for i in r.composer]
+    lyric_sections = [linesep.join(paragraph) + linesep for paragraph in r.lyric_sections]
+    lyricist_names = [i.text for i in r.lyricists]
+    composer_names = [i.text for i in r.composers]
     print(  # noqa: T201
         textwrap.dedent(
             f"""

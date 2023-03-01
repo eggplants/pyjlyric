@@ -39,7 +39,20 @@ pip install pyjlyric
 ### CLI
 
 ```shellsession
-jrc -h
+$ jrc -h
+usage: jrc [-h] [-V] url
+
+Get Japanese Music Lyric with Site URL.
+
+positional arguments:
+  url
+
+options:
+  -h, --help     show this help message and exit
+  -V, --version  show program's version number and exit
+
+supported sites:
+  - ...
 ```
 
 ### Library
@@ -61,12 +74,12 @@ LyricPage(
     link=HttpUrl('https://kashinavi.com/artist.html?artist=104498&kashu=King+%26+Prince&start=1', ),
     text='King & Prince'
   ),
-  composer=[
+  composers=[
     WithUrlText(link=None, text='Joacim Persson・Johan Alkenas・SQVARE・Sean Michael Alexander')
   ],
-  lyricist=[WithUrlText(link=None, text='木村友威')],
-  arranger=None,
-  lyric=[
+  lyricists=[WithUrlText(link=None, text='木村友威')],
+  arrangers=None,
+  lyric_sections=[
     ['Keep it up, keep it up yup'],
     ['...'],
     ['Everything will be alright いつだって', "...", "Let's live it up"]
