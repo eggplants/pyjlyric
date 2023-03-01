@@ -4,20 +4,24 @@
   <https://img.shields.io/pypi/v/pyjlyric?color=blue>
   )](
   <https://pypi.org/project/pyjlyric/>
-) [![Maintainability](
-  <https://api.codeclimate.com/v1/badges/efdc16e97af8b8914ce9/maintainability>
-  )](
-  <https://codeclimate.com/github/eggplants/pyjlyric/maintainability>
 ) [![Release Package](
   <https://github.com/eggplants/pyjlyric/actions/workflows/release.yml/badge.svg>
   )](
   <https://github.com/eggplants/pyjlyric/actions/workflows/release.yml>
+) [![Ghcr](
+  <https://ghcr-badge.deta.dev/eggplants/pyjlyric/size>
+  )](
+  <https://github.com/eggplants/pyjlyric/pkgs/container/pyjlyric/74193340?tag=latest>
 )
 
 [![pre-commit.ci status](
   <https://results.pre-commit.ci/badge/github/eggplants/pyjlyric/master.svg>
   )](
   <https://results.pre-commit.ci/latest/github/eggplants/pyjlyric/master>
+) [![Maintainability](
+  <https://api.codeclimate.com/v1/badges/efdc16e97af8b8914ce9/maintainability>
+  )](
+  <https://codeclimate.com/github/eggplants/pyjlyric/maintainability>
 )
 
 ## Installation
