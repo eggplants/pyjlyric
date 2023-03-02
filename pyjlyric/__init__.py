@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from .evesta.parser import EvestaLyricPageParser
 from .jlyric.parser import JlyricLyricPageParser
 from .kashinavi.parser import KashinaviLyricPageParser
 from .utanet.parser import UtanetLyricPageParser
@@ -16,6 +17,7 @@ if TYPE_CHECKING:
 __version__ = "0.0.0"
 
 Parsers: tuple[type[BaseLyricPageParser], ...] = (
+    EvestaLyricPageParser,
     KashinaviLyricPageParser,
     JlyricLyricPageParser,
     UtanetLyricPageParser,

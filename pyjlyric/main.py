@@ -62,9 +62,11 @@ def parse_args() -> Namespace:
 def main() -> int:
     """CLI main."""
     args = parse_args()
-    r = parse(str(args.url))
+    url = str(args.url)
+    r = parse(url)
 
     if r is None:
+        print(f"Error: Invalid link or unsupported site - <{url}>.", file=sys.stderr)  # noqa: T201
         return 1
 
     lyric_sections = [linesep.join(paragraph) + linesep for paragraph in r.lyric_sections]
@@ -73,13 +75,13 @@ def main() -> int:
     print(  # noqa: T201
         textwrap.dedent(
             f"""
-        ===
-        Title:\t\t{r.title}
-        Artist:\t\t{r.artist.text}
-        Lyric:\t\t{" / ".join(lyricist_names)}
-        Composer:\t{" / ".join(composer_names)}
-        ===
-        """,
+            ===
+            Title:\t\t{r.title}
+            Artist:\t\t{r.artist.text}
+            Lyric:\t\t{" / ".join(lyricist_names)}
+            Composer:\t{" / ".join(composer_names)}
+            ===
+            """,
         ),
     )
 

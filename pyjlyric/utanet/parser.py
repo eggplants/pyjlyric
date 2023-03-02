@@ -1,4 +1,4 @@
-"""<https://kashinavi.com>"""
+"""<https://uta-net.com>"""
 
 import re
 from urllib.parse import urljoin
