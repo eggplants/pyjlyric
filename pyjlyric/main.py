@@ -37,7 +37,7 @@ def parse_args() -> Namespace:
 
     parser = ArgumentParser(
         prog="jrc",
-        description="Get Japanese Music Lyric with Site URL.",
+        description="get lyric data by URL.",
         formatter_class=(
             lambda prog: HelpFormatter(
                 prog,

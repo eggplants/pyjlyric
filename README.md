@@ -1,4 +1,4 @@
-# pyjlyric: Japanese Lyric Extractor
+# pyjlyric: Japanese Lyric Aggregator
 
 [![PyPI](
   <https://img.shields.io/pypi/v/pyjlyric?color=blue>
@@ -40,7 +40,7 @@ pip install pyjlyric
 $ jrc -h
 usage: jrc [-h] [-V] url
 
-Get Japanese Music Lyric with Site URL.
+get lyric data by URL.
 
 positional arguments:
   url
