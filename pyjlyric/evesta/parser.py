@@ -7,7 +7,7 @@ from ..base import BaseLyricPageParser, BaseLyricPageParserError
 from ..models import LyricPage, WithUrlText
 from ..utils import get_captured_value, get_source, parse_obj_as_url, select_one_tag
 
-_EVESTA_PATTERN = r"^https://lyric.evesta.jp/(?P<pageid>l\d+)\.html$"
+_EVESTA_PATTERN = r"^https://lyric\.evesta\.jp/(?P<pageid>l\d+)\.html$"
 
 
 class EvestaLyricPageParserError(BaseLyricPageParserError):

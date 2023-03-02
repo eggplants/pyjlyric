@@ -7,7 +7,7 @@ from ..base import BaseLyricPageParser, BaseLyricPageParserError
 from ..models import LyricPage, WithUrlText
 from ..utils import get_captured_value, get_source, parse_obj_as_url, select_one_tag
 
-_JLYRIC_PATTERN = r"^https://j-lyric.net/artist/(?P<artistid>[a-z0-9]+)/(?P<pageid>[a-z0-9]+)\.html$"
+_JLYRIC_PATTERN = r"^https://j-lyric\.net/artist/(?P<artistid>[a-z0-9]+)/(?P<pageid>[a-z0-9]+)\.html$"
 
 
 class JlyricLyricPageParserError(BaseLyricPageParserError):

@@ -61,7 +61,7 @@ def get_source(url: str) -> BeautifulSoup | None:
     res = requests.get(url, timeout=_REQUESTS_TIMEOUT, headers=_REQUESTS_HEADERS)
     if not res.ok:
         return None
-    return BeautifulSoup(markup=res.content, features="lxml")
+    return BeautifulSoup(markup=res.text, features="lxml")
 
 
 def select_one_tag(bs: BeautifulSoup | Tag, selector: str) -> Tag:
