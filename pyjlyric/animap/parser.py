@@ -6,7 +6,7 @@ from ..base import BaseLyricPageParser, BaseLyricPageParserError
 from ..models import LyricPage, WithUrlText
 from ..utils import get_captured_value, get_source, parse_obj_as_url, select_one_tag
 
-_ANIMAP_PATTERN = r"^http://www\.animap\.jp/kasi/showkasi\.php\?surl=(?P<pageid>ani\d+)$"
+_ANIMAP_PATTERN = r"^http://www\.animap\.jp/kasi/showkasi\.php\?surl=(?P<pageid>(?:ani|k-)\d+(?:-\d+)*)$"
 
 
 class AnimapLyricPageParserError(BaseLyricPageParserError):

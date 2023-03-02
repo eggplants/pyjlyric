@@ -78,8 +78,8 @@ def main() -> int:
             ===
             Title:\t\t{r.title}
             Artist:\t\t{r.artist.text}
-            Lyric:\t\t{" / ".join(lyricist_names)}
-            Composer:\t{" / ".join(composer_names)}
+            Lyric:\t\t{" / ".join(lyricist_names) or "(No data)"}
+            Composer:\t{" / ".join(composer_names) or "(No data)"}
             ===
             """,
         ),
