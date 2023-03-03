@@ -24,6 +24,10 @@
   <https://codeclimate.com/github/eggplants/pyjlyric/maintainability>
 )
 
+## Supported sites
+
+<https://github.com/eggplants/pyjlyric/issues/4>
+
 ## Installation
 
 ```sh
