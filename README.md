@@ -68,23 +68,17 @@ pyjlyric.parse("https://kashinavi.com/song_view.html?155779")
 Returns:
 
 ```python
-LyricPage(
-  title='Life goes on',
-  page_url=HttpUrl('https://kashinavi.com/song_view.html?155779', ),
-  pageid='155779',
-  artist=WithUrlText(
-    link=HttpUrl('https://kashinavi.com/artist.html?artist=104498&kashu=King+%26+Prince&start=1', ),
-    text='King & Prince'
-  ),
-  composers=[
-    WithUrlText(link=None, text='Joacim Persson・Johan Alkenas・SQVARE・Sean Michael Alexander')
-  ],
-  lyricists=[WithUrlText(link=None, text='木村友威')],
-  arrangers=None,
-  lyric_sections=[
-    ['Keep it up, keep it up yup'],
-    ['...'],
-    ['Everything will be alright いつだって', "...", "Let's live it up"]
-  ]
+KashinaviLyricPage(
+    title='Life goes on',
+    page_url=HttpUrl('https://kashinavi.com/song_view.html?155779', ),
+    pageid='155779',
+    artist=WithUrlText(
+        link=HttpUrl('https://kashinavi.com/artist.html?artist=104498&kashu=King+%26+Prince&start=1', ),
+        text='King & Prince'
+    ),
+    composer='Joacim Persson・Johan Alkenas・SQVARE・Sean Michael Alexander',
+    lyricist='木村友威',
+    arranger=None,
+    lyric_sections=[['Keep it up, keep it up yup'], [...], [..., "Let's live it up"]]
 )
 ```
