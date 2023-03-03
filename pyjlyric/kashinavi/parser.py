@@ -5,9 +5,9 @@ import re
 from bs4 import BeautifulSoup, NavigableString, Tag
 
 from ..base import BaseLyricPageParser, BaseLyricPageParserError
-from ..models import LyricPage, WithUrlText
-from ..utils import get_captured_value, get_source, parse_obj_as_url
-from .models import JSONLD
+from ..model import WithUrlText
+from ..util import get_captured_value, get_source, parse_obj_as_url
+from .model import JSONLD, KashinaviLyricPage
 
 _KASHINAVI_PATTERN = r"^https://kashinavi\.com/song_view\.html\?(?P<pageid>\d+)"
 
@@ -27,7 +27,7 @@ class KashinaviLyricPageParser(BaseLyricPageParser):
         return get_captured_value(m, "pageid") is not None
 
     @staticmethod
-    def parse(url: str) -> LyricPage:
+    def parse(url: str) -> KashinaviLyricPage:
         """Parse the url page and return the result as LyricPage instance."""
         pattern = re.compile(_KASHINAVI_PATTERN)
         m = re.match(pattern, url)
@@ -46,14 +46,14 @@ class KashinaviLyricPageParser(BaseLyricPageParser):
 
         artist = jsonld.recorded_as.by_artist
 
-        return LyricPage(
+        return KashinaviLyricPage(
             title=jsonld.name,
             page_url=parse_obj_as_url(url),
             pageid=pageid,
             artist=WithUrlText(link=artist.url, text=artist.name),
-            composers=[WithUrlText(text=jsonld.composer.name, link=None)],
-            lyricists=[WithUrlText(text=jsonld.lyricist.name, link=None)],
-            arrangers=None,
+            composer=jsonld.composer.name,
+            lyricist=jsonld.lyricist.name,
+            arranger=None,
             lyric_sections=[
                 [i.text for i in section.children if isinstance(i, NavigableString)]
                 for section in BeautifulSoup(jsonld.lyrics.text, "lxml").find_all("p")

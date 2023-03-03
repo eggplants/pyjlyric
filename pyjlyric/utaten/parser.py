@@ -6,8 +6,8 @@ from urllib.parse import urljoin
 from bs4 import Tag
 
 from ..base import BaseLyricPageParser, BaseLyricPageParserError
-from ..models import LyricPage, WithUrlText
-from ..utils import get_captured_value, get_source, parse_obj_as_url, select_one_tag
+from ..util import get_captured_value, get_source, parse_obj_as_url, parse_text_with_optional_link, select_one_tag
+from .model import UtatenLyricPage
 
 _UTATEN_PATTERN = r"^https://utaten\.com/lyric/(?P<pageid>[a-z]{2}\d+)/$"
 
@@ -29,7 +29,7 @@ class UtatenLyricPageParser(BaseLyricPageParser):
         return pageid is not None
 
     @staticmethod
-    def parse(url: str) -> LyricPage:
+    def parse(url: str) -> UtatenLyricPage:
         """Parse the url page and return the result as LyricPage instance."""
         pattern = re.compile(_UTATEN_PATTERN)
         m = re.match(pattern, url)
@@ -106,17 +106,13 @@ class UtatenLyricPageParser(BaseLyricPageParser):
         for span in lyric.select("span.rt"):
             span.replace_with("")
 
-        return LyricPage(
+        return UtatenLyricPage(
             title=title_h2.text.strip(),
             page_url=parse_obj_as_url(url),
             pageid=pageid,
-            artist=WithUrlText(text=artist.text.strip(), link=artist_link),
-            composers=[WithUrlText(text=composer_dd.text.strip(), link=composer_link)],
-            lyricists=[WithUrlText(text=lyricist_dd.text.strip(), link=lyricist_link)],
-            arrangers=arranger_dd
-            if arranger_dd is None
-            else [
-                WithUrlText(text=arranger_dd.text, link=arranger_link),
-            ],
+            artist=parse_text_with_optional_link(artist.text.strip(), artist_link),
+            composer=parse_text_with_optional_link(composer_dd.text.strip(), composer_link),
+            lyricist=parse_text_with_optional_link(lyricist_dd.text.strip(), lyricist_link),
+            arranger=None if arranger_dd is None else parse_text_with_optional_link(arranger_dd.text, arranger_link),
             lyric_sections=[section.strip().split("\n") for section in lyric.text.replace("\u3000", " ").split("\n\n")],
         )

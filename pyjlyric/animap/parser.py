@@ -3,8 +3,8 @@
 import re
 
 from ..base import BaseLyricPageParser, BaseLyricPageParserError
-from ..models import LyricPage, WithUrlText
-from ..utils import get_captured_value, get_source, parse_obj_as_url, select_one_tag
+from ..util import get_captured_value, get_source, parse_obj_as_url, select_one_tag
+from .model import AnimapLyricPage
 
 _ANIMAP_PATTERN = r"^http://www\.animap\.jp/kasi/showkasi\.php\?surl=(?P<pageid>(?:ani|k-)\d+(?:-\d+)*)$"
 
@@ -26,7 +26,7 @@ class AnimapLyricPageParser(BaseLyricPageParser):
         return pageid is not None
 
     @staticmethod
-    def parse(url: str) -> LyricPage:
+    def parse(url: str) -> AnimapLyricPage:
         """Parse the url page and return the result as LyricPage instance."""
         pattern = re.compile(_ANIMAP_PATTERN)
         m = re.match(pattern, url)
@@ -42,15 +42,13 @@ class AnimapLyricPageParser(BaseLyricPageParser):
         for br in lyric.select("br"):
             br.replace_with("\n")
 
-        return LyricPage(
+        return AnimapLyricPage(
             title=select_one_tag(bs, "tr:nth-child(2) > td:nth-child(2)").text.strip(),
             page_url=parse_obj_as_url(url),
             pageid=pageid,
-            artist=WithUrlText(text=select_one_tag(bs, "tr:nth-child(1) > td:nth-child(2)").text.strip(), link=None),
-            composers=[WithUrlText(text=select_one_tag(bs, "tr:nth-child(2) > td:nth-child(4)").text, link=None)],
-            lyricists=[
-                WithUrlText(text=select_one_tag(bs, "tr:nth-child(1) > td:nth-child(4)").text.strip(), link=None),
-            ],
-            arrangers=None,
+            artist=select_one_tag(bs, "tr:nth-child(1) > td:nth-child(2)").text.strip(),
+            composer=select_one_tag(bs, "tr:nth-child(2) > td:nth-child(4)").text.strip(),
+            lyricist=select_one_tag(bs, "tr:nth-child(1) > td:nth-child(4)").text.strip(),
+            arranger=None,
             lyric_sections=[section.strip().split("\n") for section in lyric.text.strip().split("\n\n")],
         )

@@ -11,7 +11,7 @@ from .utanet.parser import UtanetLyricPageParser
 from .utaten.parser import UtatenLyricPageParser
 
 if TYPE_CHECKING:
-    from pyjlyric.models import LyricPage
+    from pyjlyric.model import LyricPage
 
     from .base import BaseLyricPageParser
 

@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from typing_extensions import Self
 
-    from .models import LyricPage
+    from .model import LyricPage
 
 
 class BaseLyricPageParserError(Exception):

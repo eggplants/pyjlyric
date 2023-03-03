@@ -4,8 +4,8 @@ import re
 from urllib.parse import urljoin
 
 from ..base import BaseLyricPageParser, BaseLyricPageParserError
-from ..models import LyricPage, WithUrlText
-from ..utils import get_captured_value, get_source, parse_obj_as_url, select_one_tag
+from ..util import get_captured_value, get_source, parse_obj_as_url, parse_text_with_optional_link, select_one_tag
+from .model import UtanetLyricPage
 
 _UTANET_PATTERN = r"^https://www.uta-net.com/song/(?P<pageid>\d+)/$"
 
@@ -27,7 +27,7 @@ class UtanetLyricPageParser(BaseLyricPageParser):
         return pageid is not None
 
     @staticmethod
-    def parse(url: str) -> LyricPage:
+    def parse(url: str) -> UtanetLyricPage:
         """Parse the url page and return the result as LyricPage instance."""
         pattern = re.compile(_UTANET_PATTERN)
         m = re.match(pattern, url)
@@ -81,17 +81,13 @@ class UtanetLyricPageParser(BaseLyricPageParser):
         for br in lyric.select("br"):
             br.replace_with("\n")
 
-        return LyricPage(
+        return UtanetLyricPage(
             title=select_one_tag(header_div, "h2").text,
             page_url=parse_obj_as_url(url),
             pageid=pageid,
-            artist=WithUrlText(text=artist.text, link=artist_link),
-            composers=[WithUrlText(text=composer.text, link=composer_link)],
-            lyricists=[WithUrlText(text=lyricist.text, link=lyricist_link)],
-            arrangers=arranger
-            if arranger is None
-            else [
-                WithUrlText(text=arranger.text, link=arranger_link),
-            ],
+            artist=parse_text_with_optional_link(artist.text, artist_link),
+            composer=parse_text_with_optional_link(composer.text, composer_link),
+            lyricist=parse_text_with_optional_link(lyricist.text, lyricist_link),
+            arranger=None if arranger is None else parse_text_with_optional_link(arranger.text, arranger_link),
             lyric_sections=[section.strip().split("\n") for section in lyric.text.replace("\u3000", " ").split("\n\n")],
         )

@@ -32,7 +32,7 @@ line-length = 120
 max-complexity = 18
 
 [tool.ruff.per-file-ignores]
-"models.py" = [
+"model.py" = [
   # https://github.com/pydantic/pydantic/issues/2597#issuecomment-1086194186
   "UP006", # Use `tuple`/`list` instead of `Tuple`/`List`
   "UP007", # Use `X | Y` for type annotations

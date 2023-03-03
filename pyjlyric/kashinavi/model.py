@@ -1,5 +1,7 @@
 from pydantic import BaseModel, Field, HttpUrl
 
+from ..model import LyricPage, WithUrlText
+
 
 class _ByArtist(BaseModel):
     _type: str = Field(..., alias="@type")
@@ -41,3 +43,10 @@ class JSONLD(BaseModel):
     lyricist: _Lyricist
     composer: _Composer
     lyrics: _Lyrics = Field(..., alias="Lyrics")
+
+
+class KashinaviLyricPage(LyricPage):
+    artist: WithUrlText
+    composer: str
+    lyricist: str
+    arranger: None

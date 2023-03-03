@@ -7,6 +7,8 @@ import requests
 from bs4 import BeautifulSoup, Tag
 from pydantic import HttpUrl, parse_obj_as
 
+from pyjlyric.model import WithUrlText
+
 if TYPE_CHECKING:
     from re import Match
 
@@ -77,3 +79,9 @@ def select_one_tag(bs: BeautifulSoup | Tag, selector: str) -> Tag:
 def parse_obj_as_url(url: str) -> HttpUrl:
     """WIP."""
     return parse_obj_as(HttpUrl, url)  # type: ignore[no-any-return]
+
+
+def parse_text_with_optional_link(text: str, link: HttpUrl | None) -> WithUrlText | str:
+    if link is None:
+        return text
+    return WithUrlText(text=text, link=link)

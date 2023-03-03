@@ -3,8 +3,8 @@
 import re
 
 from ..base import BaseLyricPageParser, BaseLyricPageParserError
-from ..models import LyricPage, WithUrlText
-from ..utils import get_captured_value, get_source, parse_obj_as_url, select_one_tag
+from ..model import LyricPage
+from ..util import get_captured_value, get_source, parse_obj_as_url, select_one_tag
 
 _UTAMAP_PATTERN = r"^https://www\.utamap\.com/showtop\.php\?surl=(?P<pageid>\d+)$"
 
@@ -46,22 +46,9 @@ class UtamapLyricPageParser(BaseLyricPageParser):
             title=select_one_tag(bs, "td.kasi1").text,
             page_url=parse_obj_as_url(url),
             pageid=pageid,
-            artist=WithUrlText(
-                text=select_one_tag(bs, "tr:nth-child(3) > td:nth-child(2).pad5x10x0x10 > strong").text.strip(),
-                link=None,
-            ),
-            composers=[
-                WithUrlText(
-                    text=select_one_tag(bs, "tr:nth-child(2) > td:nth-child(2).pad5x10x0x10").text.strip(),
-                    link=None,
-                ),
-            ],
-            lyricists=[
-                WithUrlText(
-                    text=select_one_tag(bs, "tr:nth-child(1) > td:nth-child(2).pad5x10x0x10").text.strip(),
-                    link=None,
-                ),
-            ],
-            arrangers=None,
+            artist=select_one_tag(bs, "tr:nth-child(3) > td:nth-child(2).pad5x10x0x10 > strong").text.strip(),
+            composer=select_one_tag(bs, "tr:nth-child(2) > td:nth-child(2).pad5x10x0x10").text.strip(),
+            lyricist=select_one_tag(bs, "tr:nth-child(1) > td:nth-child(2).pad5x10x0x10").text.strip(),
+            arranger=None,
             lyric_sections=[section.strip().split("\n") for section in lyric.text.strip().split("\n\n")],
         )

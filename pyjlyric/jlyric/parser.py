@@ -4,8 +4,8 @@ import re
 from urllib.parse import urljoin
 
 from ..base import BaseLyricPageParser, BaseLyricPageParserError
-from ..models import LyricPage, WithUrlText
-from ..utils import get_captured_value, get_source, parse_obj_as_url, select_one_tag
+from ..util import get_captured_value, get_source, parse_obj_as_url, parse_text_with_optional_link, select_one_tag
+from .model import JlyricLyricPage
 
 _JLYRIC_PATTERN = r"^https://j-lyric\.net/artist/(?P<artistid>[a-z0-9]+)/(?P<pageid>[a-z0-9]+)\.html$"
 
@@ -28,7 +28,7 @@ class JlyricLyricPageParser(BaseLyricPageParser):
         return artistid is not None and pageid is not None
 
     @staticmethod
-    def parse(url: str) -> LyricPage:
+    def parse(url: str) -> JlyricLyricPage:
         """Parse the url page and return the result as LyricPage instance."""
         pattern = re.compile(_JLYRIC_PATTERN)
         m = re.match(pattern, url)
@@ -68,17 +68,13 @@ class JlyricLyricPageParser(BaseLyricPageParser):
         for br in lyric.select("br"):
             br.replace_with("\n")
 
-        return LyricPage(
+        return JlyricLyricPage(
             title=title_m.groups()[0],
             page_url=parse_obj_as_url(url),
             pageid=pageid,
-            artist=WithUrlText(link=artist_link, text=artist.text),
-            composers=[
-                WithUrlText(text=str(composer_name), link=None) for composer_name in composer_m.groups()[0].split("・")
-            ],
-            lyricists=[
-                WithUrlText(text=str(composer_name), link=None) for composer_name in lyricist_m.groups()[0].split("・")
-            ],
-            arrangers=None,
+            artist=parse_text_with_optional_link(artist.text, artist_link),
+            composer=composer_m.groups()[0],
+            lyricist=lyricist_m.groups()[0],
+            arranger=None,
             lyric_sections=[section.strip().split("\n") for section in lyric.text.replace("\u3000", " ").split("\n\n")],
         )

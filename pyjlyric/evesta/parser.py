@@ -4,8 +4,8 @@ import re
 from urllib.parse import urljoin
 
 from ..base import BaseLyricPageParser, BaseLyricPageParserError
-from ..models import LyricPage, WithUrlText
-from ..utils import get_captured_value, get_source, parse_obj_as_url, select_one_tag
+from ..util import get_captured_value, get_source, parse_obj_as_url, parse_text_with_optional_link, select_one_tag
+from .model import EvestaLyricPage
 
 _EVESTA_PATTERN = r"^https://lyric\.evesta\.jp/(?P<pageid>l\d+)\.html$"
 
@@ -27,7 +27,7 @@ class EvestaLyricPageParser(BaseLyricPageParser):
         return pageid is not None
 
     @staticmethod
-    def parse(url: str) -> LyricPage:
+    def parse(url: str) -> EvestaLyricPage:
         """Parse the url page and return the result as LyricPage instance."""
         pattern = re.compile(_EVESTA_PATTERN)
         m = re.match(pattern, url)
@@ -58,13 +58,13 @@ class EvestaLyricPageParser(BaseLyricPageParser):
         for br in lyric.select("br"):
             br.replace_with("")
 
-        return LyricPage(
+        return EvestaLyricPage(
             title=re.sub(r"\s歌詞$", "", select_one_tag(header_div, "h1").text),
             page_url=parse_obj_as_url(url),
             pageid=pageid,
-            artist=WithUrlText(text=artist.text, link=artist_link),
-            composers=[WithUrlText(text=composer.text, link=None)],
-            lyricists=[WithUrlText(text=lyricist.text, link=None)],
-            arrangers=None,
+            artist=parse_text_with_optional_link(artist.text, artist_link),
+            composer=composer.text,
+            lyricist=lyricist.text,
+            arranger=None,
             lyric_sections=[section.strip().split("\r\n") for section in lyric.text.strip().split("\n\r\n")],
         )
