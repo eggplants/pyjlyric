@@ -47,7 +47,7 @@ def get_captured_value(m: Match[str] | None, group_name: str) -> str | None:
     return str(d[group_name])
 
 
-def get_source(url: str) -> BeautifulSoup | None:
+def get_source(url: str, *, parser: str | None = "lxml") -> BeautifulSoup | None:
     """Get the source as a BeautifulSoup object.
 
     Parameters
@@ -63,7 +63,7 @@ def get_source(url: str) -> BeautifulSoup | None:
     res = requests.get(url, timeout=_REQUESTS_TIMEOUT, headers=_REQUESTS_HEADERS)
     if not res.ok:
         return None
-    return BeautifulSoup(markup=res.text, features="lxml")
+    return BeautifulSoup(markup=res.text, features="lxml" if parser is None else parser)
 
 
 def select_one_tag(bs: BeautifulSoup | Tag, selector: str) -> Tag:

@@ -70,22 +70,20 @@ def main() -> int:
         return 1
 
     lyric_sections = [linesep.join(paragraph) + linesep for paragraph in r.lyric_sections]
-    lyricist_names = [i.text for i in r.lyricists]
-    composer_names = [i.text for i in r.composers]
     print(  # noqa: T201
         textwrap.dedent(
-            f"""
+            f"""\
             ===
             Title:\t\t{r.title}
-            Artist:\t\t{r.artist.text}
-            Lyric:\t\t{" / ".join(lyricist_names) or "(No data)"}
-            Composer:\t{" / ".join(composer_names) or "(No data)"}
+            Artist:\t\t{r.artist or "(No data)"}
+            Lyric:\t\t{r.lyricist or "(No data)"}
+            Composer:\t{r.composer or "(No data)"}
             ===
             """,
-        ),
+        ).strip(),
     )
 
-    print(linesep.join(lyric_sections))  # noqa: T201
+    print(linesep.join(lyric_sections).strip())  # noqa: T201
     return 0
 
 
