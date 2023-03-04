@@ -1,7 +1,6 @@
 """<https://l-lyric.net>"""
 
 import re
-from urllib.parse import urljoin
 
 from ..base import BaseLyricPageParser, BaseLyricPageParserError
 from ..util import get_captured_value, get_source, parse_obj_as_url, parse_text_with_optional_link, select_one_tag
@@ -50,7 +49,8 @@ class JlyricLyricPageParser(BaseLyricPageParser):
             None
             if artist.href is None
             else parse_obj_as_url(
-                urljoin(url, artist.href.text),
+                artist.href.text,
+                base=url,
             )
         )
 

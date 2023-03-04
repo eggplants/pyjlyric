@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
+from urllib.parse import urljoin
 
 import requests
 from bs4 import BeautifulSoup, Tag
@@ -76,8 +77,10 @@ def select_one_tag(bs: BeautifulSoup | Tag, selector: str) -> Tag:
     return res
 
 
-def parse_obj_as_url(url: str) -> HttpUrl:
+def parse_obj_as_url(url: str, *, base: str | None = None) -> HttpUrl:
     """WIP."""
+    if base is not None:
+        url = urljoin(base, url)
     return parse_obj_as(HttpUrl, url)  # type: ignore[no-any-return]
 
 

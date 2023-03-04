@@ -1,7 +1,6 @@
 """<https://uta-net.com>"""
 
 import re
-from urllib.parse import urljoin
 
 from ..base import BaseLyricPageParser, BaseLyricPageParserError
 from ..util import get_captured_value, get_source, parse_obj_as_url, parse_text_with_optional_link, select_one_tag
@@ -46,7 +45,8 @@ class UtanetLyricPageParser(BaseLyricPageParser):
             None
             if artist.href is None
             else parse_obj_as_url(
-                urljoin(url, artist.href.text),
+                artist.href.text,
+                base=url,
             )
         )
 
@@ -55,7 +55,8 @@ class UtanetLyricPageParser(BaseLyricPageParser):
             None
             if composer.href is None
             else parse_obj_as_url(
-                urljoin(url, composer.href.text),
+                composer.href.text,
+                base=url,
             )
         )
 
@@ -64,7 +65,8 @@ class UtanetLyricPageParser(BaseLyricPageParser):
             None
             if lyricist.href is None
             else parse_obj_as_url(
-                urljoin(url, lyricist.href.text),
+                lyricist.href.text,
+                base=url,
             )
         )
 
@@ -73,7 +75,8 @@ class UtanetLyricPageParser(BaseLyricPageParser):
             None
             if arranger is None or arranger.href is None
             else parse_obj_as_url(
-                urljoin(url, arranger.href.text),
+                arranger.href.text,
+                base=url,
             )
         )
 

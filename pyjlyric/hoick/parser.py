@@ -1,7 +1,6 @@
 """<https://lyric.evesta.com>"""
 
 import re
-from urllib.parse import urljoin
 
 from pyjlyric.model import WithUrlText
 
@@ -44,13 +43,13 @@ class HoickLyricPageParser(BaseLyricPageParser):
         header_div = select_one_tag(bs, "div.m_bottom")
 
         lyricists = [
-            WithUrlText(text=a.text, link=parse_obj_as_url(urljoin(url, a.href.text)))
+            WithUrlText(text=a.text, link=parse_obj_as_url(a.href.text, base=url))
             for a in select_one_tag(header_div, "h2.lylic").select("a")
             if a.href is not None
         ]
 
         composers = [
-            WithUrlText(text=a.text, link=parse_obj_as_url(urljoin(url, a.href.text)))
+            WithUrlText(text=a.text, link=parse_obj_as_url(a.href.text, base=url))
             for a in select_one_tag(header_div, "h2.music").select("a")
             if a.href is not None
         ]

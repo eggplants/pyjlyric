@@ -1,7 +1,6 @@
 """<https://utaten.com>"""
 
 import re
-from urllib.parse import urljoin
 
 from bs4 import Tag
 
@@ -50,7 +49,8 @@ class UtatenLyricPageParser(BaseLyricPageParser):
             None
             if artist.href is None
             else parse_obj_as_url(
-                urljoin(url, artist.href.text),
+                artist.href.text,
+                base=url,
             )
         )
 
@@ -66,7 +66,8 @@ class UtatenLyricPageParser(BaseLyricPageParser):
             None
             if composer_dd.href is None
             else parse_obj_as_url(
-                urljoin(url, composer_dd.href.text),
+                composer_dd.href.text,
+                base=url,
             )
         )
 
@@ -82,7 +83,8 @@ class UtatenLyricPageParser(BaseLyricPageParser):
             None
             if lyricist_dd.href is None
             else parse_obj_as_url(
-                urljoin(url, lyricist_dd.href.text),
+                lyricist_dd.href.text,
+                base=url,
             )
         )
 
@@ -98,7 +100,8 @@ class UtatenLyricPageParser(BaseLyricPageParser):
             None
             if arranger_dd is None or arranger_dd.href is None
             else parse_obj_as_url(
-                urljoin(url, arranger_dd.href.text),
+                arranger_dd.href.text,
+                base=url,
             )
         )
 
