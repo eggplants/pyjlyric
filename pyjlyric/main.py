@@ -69,7 +69,7 @@ def main() -> int:
         print(f"Error: Invalid link or unsupported site - <{url}>.", file=sys.stderr)  # noqa: T201
         return 1
 
-    lyric_sections = [linesep.join(paragraph) + linesep for paragraph in r.lyric_sections]
+    lyric_sections = [linesep.join(paragraph) for paragraph in r.lyric_sections]
     print(  # noqa: T201
         textwrap.dedent(
             f"""\
@@ -83,7 +83,7 @@ def main() -> int:
         ).strip(),
     )
 
-    print(linesep.join(lyric_sections).strip())  # noqa: T201
+    print((linesep + linesep).join(lyric_sections).strip())  # noqa: T201
     return 0
 
 

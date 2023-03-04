@@ -26,4 +26,4 @@ class LyricPage(BaseModel):
     lyricist: Union[str, WithUrlText, List[str], List[WithUrlText], None]
     arranger: Union[str, WithUrlText, List[str], List[WithUrlText], None]
 
-    lyric_sections: List[_LyricSection] | None
+    lyric_sections: List[_LyricSection]
