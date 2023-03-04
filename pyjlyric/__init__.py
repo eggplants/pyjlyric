@@ -22,7 +22,7 @@ if TYPE_CHECKING:
     from .base import BaseLyricPageParser
 
 
-__version__ = "0.0.0"
+__version__ = "0.0.1"
 
 Parsers: tuple[type[BaseLyricPageParser], ...] = (
     AnimapLyricPageParser,
