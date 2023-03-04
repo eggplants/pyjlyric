@@ -6,7 +6,7 @@ from ..base import BaseLyricPageParser, BaseLyricPageParserError
 from ..util import get_captured_value, get_source, parse_obj_as_url, parse_text_with_optional_link, select_one_tag
 from .model import UtanetLyricPage
 
-_UTANET_PATTERN = r"^https://www.uta-net.com/song/(?P<pageid>\d+)/$"
+_UTANET_PATTERN = r"^https://www.uta-net.com/song/(?P<pageid>\d+)/?$"
 
 
 class UtanetLyricPageParserError(BaseLyricPageParserError):
@@ -14,7 +14,7 @@ class UtanetLyricPageParserError(BaseLyricPageParserError):
 
 
 class UtanetLyricPageParser(BaseLyricPageParser):
-    """https://www.uta-net.com/song/<pageid>/"""
+    """https://www.uta-net.com/song/<pageid>"""
 
     @staticmethod
     def is_valid_url(url: str) -> bool:

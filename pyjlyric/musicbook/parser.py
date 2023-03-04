@@ -16,7 +16,7 @@ class MusicbookLyricPageParserError(BaseLyricPageParserError):
 
 
 class MusicbookLyricPageParser(BaseLyricPageParser):
-    """https://hoick.jp/mdb/detail/<pageid>"""
+    """https://music-book.jp/music/Artist/<artistid>/Music/<pageid>"""
 
     @staticmethod
     def is_valid_url(url: str) -> bool:
