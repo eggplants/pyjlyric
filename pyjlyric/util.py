@@ -79,7 +79,10 @@ def get_source(
 
     if not res.ok:
         return None
-    return BeautifulSoup(markup=res.text, features="lxml" if parser is None else parser)
+    return BeautifulSoup(
+        markup=res.content if res.content != b"" else res.text,
+        features="lxml" if parser is None else parser,
+    )
 
 
 def select_one_tag(bs: BeautifulSoup | Tag, selector: str) -> Tag:
@@ -108,9 +111,10 @@ def parse_text_with_optional_link(text: str, link: HttpUrl | None) -> WithUrlTex
 def convert_lines_into_sections(lines: list[str]) -> list[list[str]]:
     lyric_sections = []
     now: list[str] = []
-    for line in lines:
+    for line in [*lines, ""]:
         if line == "":
-            lyric_sections.append(now)
+            if len(now) > 0:
+                lyric_sections.append(now)
             now = []
         else:
             now.append(line)

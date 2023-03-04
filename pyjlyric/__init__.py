@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 
 from .animap.parser import AnimapLyricPageParser
 from .evesta.parser import EvestaLyricPageParser
+from .gakki.parser import GakkiLyricPageParser
 from .hoick.parser import HoickLyricPageParser
 from .jlyric.parser import JlyricLyricPageParser
 from .joysound.parser import JoysoundLyricPageParser
@@ -25,6 +26,7 @@ __version__ = "0.0.0"
 Parsers: tuple[type[BaseLyricPageParser], ...] = (
     AnimapLyricPageParser,
     EvestaLyricPageParser,
+    GakkiLyricPageParser,
     HoickLyricPageParser,
     KashinaviLyricPageParser,
     JoysoundLyricPageParser,
