@@ -7,8 +7,8 @@ from ..model import LyricPage, WithUrlText
 
 class MusicbookLyricPage(LyricPage):
     artist: WithUrlText
-    composer: str
-    lyricist: str
+    composer: Optional[str]
+    lyricist: Optional[str]
     arranger: None
 
 

@@ -13,6 +13,8 @@ from argparse import (
 )
 from os import linesep
 
+from pyjlyric.model import WithUrlText
+
 from . import Parsers, __version__, parse
 
 
@@ -69,20 +71,34 @@ def main() -> int:
         print(f"Error: Invalid link or unsupported site - <{url}>.", file=sys.stderr)  # noqa: T201
         return 1
 
-    lyric_sections = [linesep.join(paragraph) for paragraph in r.lyric_sections]
+    title = r.title
+    artist = r.artist.text if isinstance(r.artist, WithUrlText) else r.artist
+    artist = [a.text if isinstance(a, WithUrlText) else a for a in artist] if isinstance(artist, list) else artist
+
+    lyricist = r.lyricist.text if isinstance(r.lyricist, WithUrlText) else r.lyricist
+    lyricist = (
+        [ly.text if isinstance(ly, WithUrlText) else ly for ly in lyricist] if isinstance(lyricist, list) else lyricist
+    )
+
+    composer = r.composer.text if isinstance(r.composer, WithUrlText) else r.composer
+    composer = (
+        [c.text if isinstance(c, WithUrlText) else c for c in composer] if isinstance(composer, list) else composer
+    )
+
     print(  # noqa: T201
         textwrap.dedent(
             f"""\
             ===
-            Title:\t\t{r.title}
-            Artist:\t\t{r.artist or "(No data)"}
-            Lyric:\t\t{r.lyricist or "(No data)"}
-            Composer:\t{r.composer or "(No data)"}
+            Title:\t\t{title}
+            Artist:\t\t{artist or "(No data)"}
+            Lyric:\t\t{lyricist or "(No data)"}
+            Composer:\t{composer or "(No data)"}
             ===
             """,
         ).strip(),
     )
 
+    lyric_sections = [linesep.join(paragraph) for paragraph in r.lyric_sections]
     print((linesep + linesep).join(lyric_sections).strip())  # noqa: T201
     return 0
 

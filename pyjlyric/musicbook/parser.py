@@ -55,21 +55,21 @@ class MusicbookLyricPageParser(BaseLyricPageParser):
         if artist_link is None:
             raise MusicbookLyricPageParserError from ValueError
 
-        lyricist = select_one_tag(bs, "li:nth-child(1) > div > span").text
-        composer = select_one_tag(bs, "li:nth-child(2) > div > span").text
+        lyricist = select_one_tag(bs, "li:nth-child(1) > div > span").text.strip()
+        composer = select_one_tag(bs, "li:nth-child(2) > div > span").text.strip()
 
         bs_lyric = get_source(f"https://music-book.jp/music/Lyrics/Track?artistName={artist_name}&trackTitle={title}")
         if bs_lyric is None:
             raise MusicbookLyricPageParserError from ConnectionError
-        lyric_lines = MusicbookLyricData.parse_raw(bs_lyric.text).lyrics
+        lyric_data = MusicbookLyricData.parse_raw(bs_lyric.text)
 
         return MusicbookLyricPage(
             title=title,
             page_url=parse_obj_as_url(url),
             pageid=pageid,
             artist=WithUrlText(text=artist_name, link=parse_obj_as_url(artist_link, base=url)),
-            composer=composer,
-            lyricist=lyricist,
+            composer=composer if composer != "-" and composer != "" else lyric_data.composer,
+            lyricist=lyricist if lyricist != "-" and lyricist != "" else lyric_data.writer,
             arranger=None,
-            lyric_sections=convert_lines_into_sections(lyric_lines),
+            lyric_sections=convert_lines_into_sections(lyric_data.lyrics),
         )
