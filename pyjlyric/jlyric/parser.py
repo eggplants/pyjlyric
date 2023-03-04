@@ -16,6 +16,8 @@ class JlyricLyricPageParserError(BaseLyricPageParserError):
 class JlyricLyricPageParser(BaseLyricPageParser):
     """https://j-lyric.net/artist/<artistid>/<pageid>.html"""
 
+    _test = "https://j-lyric.net/artist/a05d28d/l05c028.html"
+
     @staticmethod
     def is_valid_url(url: str) -> bool:
         """Check if the url is valid."""

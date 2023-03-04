@@ -15,6 +15,8 @@ class BaseLyricPageParserError(Exception):
 
 
 class BaseLyricPageParser(ABC):
+    _test: str
+
     def __init__(self: Self, url: str) -> None:
         if self.is_valid_url(url):
             self.data = self.parse(url)

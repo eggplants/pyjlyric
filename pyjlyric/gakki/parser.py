@@ -18,6 +18,8 @@ class GakkiLyricPageParserError(BaseLyricPageParserError):
 class GakkiLyricPageParser(BaseLyricPageParser):
     """https://gakufu.gakki.me/m/data/<pageid>.html"""
 
+    _test = "https://gakufu.gakki.me/m/data/RQ17577.html"
+
     @staticmethod
     def is_valid_url(url: str) -> bool:
         """Check if the url is valid."""
@@ -47,7 +49,7 @@ class GakkiLyricPageParser(BaseLyricPageParser):
 
         artist = select_one_tag(bs, "#topics > ol > li:nth-child(2) > a")
 
-        lyric_chars: list[str] = []
+        lyric_chars = []
         for div in bs.select("div#chord_area > div"):
             if div.get("class") is None:
                 lyric_chars.append("\n")

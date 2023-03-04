@@ -18,6 +18,8 @@ class JtotalLyricPageParserError(BaseLyricPageParserError):
 class JtotalLyricPageParser(BaseLyricPageParser):
     """http://www.animap.jp/kasi/showkasi.php?surl=<pageid>"""
 
+    _test = "https://music.j-total.net/data/004e/006_Elephant_Kashimashi/095.html"
+
     @staticmethod
     def is_valid_url(url: str) -> bool:
         """Check if the url is valid."""

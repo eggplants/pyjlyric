@@ -18,6 +18,8 @@ class MusicbookLyricPageParserError(BaseLyricPageParserError):
 class MusicbookLyricPageParser(BaseLyricPageParser):
     """https://music-book.jp/music/Artist/<artistid>/Music/<pageid>"""
 
+    _test = "https://music-book.jp/music/Artist/1538923/Music/aaahiqc4"
+
     @staticmethod
     def is_valid_url(url: str) -> bool:
         """Check if the url is valid."""

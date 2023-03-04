@@ -16,6 +16,8 @@ class EvestaLyricPageParserError(BaseLyricPageParserError):
 class EvestaLyricPageParser(BaseLyricPageParser):
     """https://lyric.evesta.jp/<pageid>.html"""
 
+    _test = "https://lyric.evesta.jp/l791684.html"
+
     @staticmethod
     def is_valid_url(url: str) -> bool:
         """Check if the url is valid."""

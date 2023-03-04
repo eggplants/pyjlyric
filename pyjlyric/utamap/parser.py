@@ -16,6 +16,8 @@ class UtamapLyricPageParserError(BaseLyricPageParserError):
 class UtamapLyricPageParser(BaseLyricPageParser):
     """http://www.utamap.com/showtop.php?surl=<pageid>"""
 
+    _test = "https://www.utamap.com/showtop.php?surl=58401"
+
     @staticmethod
     def is_valid_url(url: str) -> bool:
         """Check if the url is valid."""

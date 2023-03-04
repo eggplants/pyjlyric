@@ -46,3 +46,23 @@ def parse(url: str) -> LyricPage | None:
         if parser.is_valid_url(url):
             return parser.parse(url)
     return None
+
+
+__all__ = (
+    "__version__",
+    "Parsers",
+    "AnimapLyricPageParser",
+    "EvestaLyricPageParser",
+    "GakkiLyricPageParser",
+    "HoickLyricPageParser",
+    "JlyricLyricPageParser",
+    "JoysoundLyricPageParser",
+    "JtotalLyricPageParser",
+    "KashinaviLyricPageParser",
+    "MusicbookLyricPageParser",
+    "PetitlyricsLyricPageParser",
+    "UtamapLyricPageParser",
+    "UtanetLyricPageParser",
+    "UtatenLyricPageParser",
+    "parse",
+)

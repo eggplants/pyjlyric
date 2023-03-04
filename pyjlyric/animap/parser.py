@@ -2,8 +2,11 @@
 
 import re
 
+import requests
+from bs4 import BeautifulSoup
+
 from ..base import BaseLyricPageParser, BaseLyricPageParserError
-from ..util import get_captured_value, get_source, parse_obj_as_url, select_one_tag
+from ..util import get_captured_value, parse_obj_as_url, select_one_tag
 from .model import AnimapLyricPage
 
 _ANIMAP_PATTERN = r"^http://www\.animap\.jp/kasi/showkasi\.php\?surl=(?P<pageid>(?:ani|k-)\d+(?:-\d+)*)$"
@@ -15,6 +18,8 @@ class AnimapLyricPageParserError(BaseLyricPageParserError):
 
 class AnimapLyricPageParser(BaseLyricPageParser):
     """http://www.animap.jp/kasi/showkasi.php?surl=<pageid>"""
+
+    _test = "http://www.animap.jp/kasi/showkasi.php?surl=k-180131-061"
 
     @staticmethod
     def is_valid_url(url: str) -> bool:
@@ -34,7 +39,7 @@ class AnimapLyricPageParser(BaseLyricPageParser):
         if pageid is None:
             raise AnimapLyricPageParserError from ValueError
 
-        bs = get_source(url)
+        bs = BeautifulSoup(requests.get(url, timeout=10).text.encode("shift_jis", "ignore"), "lxml")
         if bs is None:
             raise AnimapLyricPageParserError from ConnectionError
 

@@ -19,6 +19,8 @@ class KashinaviLyricPageParserError(BaseLyricPageParserError):
 class KashinaviLyricPageParser(BaseLyricPageParser):
     """https://kashinavi.com/song_view.html?<pageid>"""
 
+    _test = "https://kashinavi.com/song_view.html?155779"
+
     @staticmethod
     def is_valid_url(url: str) -> bool:
         """Check if the url is valid."""

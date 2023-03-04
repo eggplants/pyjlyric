@@ -1,6 +1,6 @@
 from base64 import standard_b64decode
 from collections.abc import Generator  # noqa: TCH003
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 from pydantic import BaseModel, validator
 
@@ -31,5 +31,5 @@ class PetitlyricsLyricData(BaseModel):
 
     @validator("__root__", pre=True, each_item=True)
     @classmethod
-    def validate_root(cls, v: dict[str, str]) -> str:
+    def validate_root(cls, v: Dict[str, str]) -> str:
         return _PetitlyricsLyric(**v).lyrics

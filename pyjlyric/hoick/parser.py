@@ -18,6 +18,8 @@ class HoickLyricPageParserError(BaseLyricPageParserError):
 class HoickLyricPageParser(BaseLyricPageParser):
     """https://hoick.jp/mdb/detail/<pageid>"""
 
+    _test = "https://hoick.jp/mdb/detail/5144/%e3%82%b1%e3%83%ad%e3%83%9d%e3%83%b3%e4%bd%93%e6%93%8d"
+
     @staticmethod
     def is_valid_url(url: str) -> bool:
         """Check if the url is valid."""

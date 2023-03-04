@@ -18,6 +18,8 @@ class UtatenLyricPageParserError(BaseLyricPageParserError):
 class UtatenLyricPageParser(BaseLyricPageParser):
     """https://utaten.com/lyric/<pageid>"""
 
+    _test = "https://utaten.com/lyric/ma21111253/"
+
     @staticmethod
     def is_valid_url(url: str) -> bool:
         """Check if the url is valid."""
@@ -54,7 +56,7 @@ class UtatenLyricPageParser(BaseLyricPageParser):
             )
         )
 
-        composer_dt = bs.find("dt", text="作曲")
+        composer_dt = bs.find("dt", string="作曲")
         if not isinstance(composer_dt, Tag):
             raise UtatenLyricPageParserError from TypeError
 
@@ -71,7 +73,7 @@ class UtatenLyricPageParser(BaseLyricPageParser):
             )
         )
 
-        lyricist_dt = bs.find("dt", text="作詞")
+        lyricist_dt = bs.find("dt", string="作詞")
         if not isinstance(lyricist_dt, Tag):
             raise UtatenLyricPageParserError from TypeError
 
@@ -88,7 +90,7 @@ class UtatenLyricPageParser(BaseLyricPageParser):
             )
         )
 
-        arranger_dt = bs.find("dt", text="編曲")
+        arranger_dt = bs.find("dt", string="編曲")
         if not isinstance(arranger_dt, Tag):
             arranger_dt = None
 

@@ -16,6 +16,8 @@ class UtanetLyricPageParserError(BaseLyricPageParserError):
 class UtanetLyricPageParser(BaseLyricPageParser):
     """https://www.uta-net.com/song/<pageid>"""
 
+    _test = "https://www.uta-net.com/song/155003/"
+
     @staticmethod
     def is_valid_url(url: str) -> bool:
         """Check if the url is valid."""

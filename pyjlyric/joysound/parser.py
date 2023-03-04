@@ -18,6 +18,8 @@ class JoysoundLyricPageParserError(BaseLyricPageParserError):
 class JoysoundLyricPageParser(BaseLyricPageParser):
     """https://www.joysound.com/web/search/song/<pageid>"""
 
+    _test = "https://www.joysound.com/web/search/song/112942"
+
     @staticmethod
     def is_valid_url(url: str) -> bool:
         """Check if the url is valid."""

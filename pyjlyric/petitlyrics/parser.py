@@ -18,6 +18,8 @@ class PetitlyricsLyricPageParserError(BaseLyricPageParserError):
 class PetitlyricsLyricPageParser(BaseLyricPageParser):
     """https://petitlyrics.com/lyrics/<pageid>"""
 
+    _test = "https://petitlyrics.com/lyrics/3287202"
+
     @staticmethod
     def is_valid_url(url: str) -> bool:
         """Check if the url is valid."""
