@@ -22,6 +22,10 @@
   <https://api.codeclimate.com/v1/badges/efdc16e97af8b8914ce9/maintainability>
   )](
   <https://codeclimate.com/github/eggplants/pyjlyric/maintainability>
+) [![Test Coverage](
+  <https://api.codeclimate.com/v1/badges/efdc16e97af8b8914ce9/test_coverage>
+  )](
+  <https://codeclimate.com/github/eggplants/pyjlyric/test_coverage>
 )
 
 ## Supported sites
