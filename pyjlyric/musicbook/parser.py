@@ -5,7 +5,7 @@ import re
 from pyjlyric.model import WithUrlText
 
 from ..base import BaseLyricPageParser, BaseLyricPageParserError
-from ..util import get_captured_value, get_source, parse_obj_as_url, select_one_tag
+from ..util import convert_lines_into_sections, get_captured_value, get_source, parse_obj_as_url, select_one_tag
 from .model import MusicbookLyricData, MusicbookLyricPage
 
 _MUSICBOOK_PATTERN = r"^https://music-book\.jp/music/Artist/(?P<artistid>\d+)/Music/(?P<pageid>[a-z0-9]+)$"
@@ -49,10 +49,11 @@ class MusicbookLyricPageParser(BaseLyricPageParser):
 
         artist = select_one_tag(bs, "a.text-with-icon.artist")
         artist_name = artist.text.strip()
-        m = re.search(r"href=\"(/music/Artist/\d+)\"", str(artist))
-        if m is None:
+
+        m = re.search(r"href=\"(?P<link>/music/Artist/\d+)\"", str(artist))
+        artist_link = get_captured_value(m, "link")
+        if artist_link is None:
             raise MusicbookLyricPageParserError from ValueError
-        artist_link = m.groups()[0]
 
         lyricist = select_one_tag(bs, "li:nth-child(1) > div > span").text
         composer = select_one_tag(bs, "li:nth-child(2) > div > span").text
@@ -61,14 +62,6 @@ class MusicbookLyricPageParser(BaseLyricPageParser):
         if bs_lyric is None:
             raise MusicbookLyricPageParserError from ConnectionError
         lyric_lines = MusicbookLyricData.parse_raw(bs_lyric.text).lyrics
-        lyric_sections = []
-        now: list[str] = []
-        for line in lyric_lines:
-            if line == "":
-                lyric_sections.append(now)
-                now = []
-            else:
-                now.append(line)
 
         return MusicbookLyricPage(
             title=title,
@@ -78,5 +71,5 @@ class MusicbookLyricPageParser(BaseLyricPageParser):
             composer=composer,
             lyricist=lyricist,
             arranger=None,
-            lyric_sections=lyric_sections,
+            lyric_sections=convert_lines_into_sections(lyric_lines),
         )

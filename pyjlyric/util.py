@@ -1,7 +1,7 @@
 """Utility functions."""
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Literal
 from urllib.parse import urljoin
 
 import requests
@@ -48,7 +48,14 @@ def get_captured_value(m: Match[str] | None, group_name: str) -> str | None:
     return str(d[group_name])
 
 
-def get_source(url: str, *, parser: str | None = "lxml") -> BeautifulSoup | None:
+def get_source(
+    url: str,
+    *,
+    data: dict[str, str | int] | None = None,
+    method: Literal["get", "post"] | None = "get",
+    headers: dict[str, str] | None = None,
+    parser: str | None = "lxml",
+) -> BeautifulSoup | None:
     """Get the source as a BeautifulSoup object.
 
     Parameters
@@ -61,7 +68,15 @@ def get_source(url: str, *, parser: str | None = "lxml") -> BeautifulSoup | None
     BeautifulSoup | None
         parsed source data of web page
     """
-    res = requests.get(url, timeout=_REQUESTS_TIMEOUT, headers=_REQUESTS_HEADERS)
+    headers = _REQUESTS_HEADERS if headers is None else dict(_REQUESTS_HEADERS, **headers)
+
+    if method is None or method == "get":
+        res = requests.get(url, data=data, timeout=_REQUESTS_TIMEOUT, headers=headers)
+    elif method == "post":
+        res = requests.post(url, data=data, timeout=_REQUESTS_TIMEOUT, headers=headers)
+    else:
+        raise ValueError(method)
+
     if not res.ok:
         return None
     return BeautifulSoup(markup=res.text, features="lxml" if parser is None else parser)
@@ -88,3 +103,15 @@ def parse_text_with_optional_link(text: str, link: HttpUrl | None) -> WithUrlTex
     if link is None:
         return text
     return WithUrlText(text=text, link=link)
+
+
+def convert_lines_into_sections(lines: list[str]) -> list[list[str]]:
+    lyric_sections = []
+    now: list[str] = []
+    for line in lines:
+        if line == "":
+            lyric_sections.append(now)
+            now = []
+        else:
+            now.append(line)
+    return lyric_sections

@@ -33,6 +33,8 @@ max-complexity = 18
 
 [tool.ruff.per-file-ignores]
 "model.py" = [
+  "ANN101",
+  "ANN102",
   # https://github.com/pydantic/pydantic/issues/2597#issuecomment-1086194186
   "UP006", # Use `tuple`/`list` instead of `Tuple`/`List`
   "UP007", # Use `X | Y` for type annotations
