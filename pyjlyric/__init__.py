@@ -6,6 +6,7 @@ from .animap.parser import AnimapLyricPageParser
 from .evesta.parser import EvestaLyricPageParser
 from .hoick.parser import HoickLyricPageParser
 from .jlyric.parser import JlyricLyricPageParser
+from .joysound.parser import JoysoundLyricPageParser
 from .kashinavi.parser import KashinaviLyricPageParser
 from .musicbook.parser import MusicbookLyricPageParser
 from .petitlyrics.parser import PetitlyricsLyricPageParser
@@ -26,6 +27,7 @@ Parsers: tuple[type[BaseLyricPageParser], ...] = (
     EvestaLyricPageParser,
     HoickLyricPageParser,
     KashinaviLyricPageParser,
+    JoysoundLyricPageParser,
     JlyricLyricPageParser,
     MusicbookLyricPageParser,
     PetitlyricsLyricPageParser,
