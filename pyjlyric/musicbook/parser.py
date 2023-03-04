@@ -1,0 +1,82 @@
+"""<https://music-book.jp>"""
+
+import re
+
+from pyjlyric.model import WithUrlText
+
+from ..base import BaseLyricPageParser, BaseLyricPageParserError
+from ..util import get_captured_value, get_source, parse_obj_as_url, select_one_tag
+from .model import MusicbookLyricData, MusicbookLyricPage
+
+_MUSICBOOK_PATTERN = r"^https://music-book\.jp/music/Artist/(?P<artistid>\d+)/Music/(?P<pageid>[a-z0-9]+)$"
+
+
+class MusicbookLyricPageParserError(BaseLyricPageParserError):
+    """WIP."""
+
+
+class MusicbookLyricPageParser(BaseLyricPageParser):
+    """https://hoick.jp/mdb/detail/<pageid>"""
+
+    @staticmethod
+    def is_valid_url(url: str) -> bool:
+        """Check if the url is valid."""
+        pattern = re.compile(_MUSICBOOK_PATTERN)
+        m = re.match(pattern, url)
+        artistid = get_captured_value(m, "artistid")
+        pageid = get_captured_value(m, "pageid")
+
+        return artistid is not None and pageid is not None
+
+    @staticmethod
+    def parse(url: str) -> MusicbookLyricPage:
+        """Parse the url page and return the result as LyricPage instance."""
+        pattern = re.compile(_MUSICBOOK_PATTERN)
+        m = re.match(pattern, url)
+        artistid = get_captured_value(m, "artistid")
+        if artistid is None:
+            raise MusicbookLyricPageParserError from ValueError
+
+        pageid = get_captured_value(m, "pageid")
+        if pageid is None:
+            raise MusicbookLyricPageParserError from ValueError
+
+        bs = get_source(url)
+        if bs is None:
+            raise MusicbookLyricPageParserError from ConnectionError
+
+        title = select_one_tag(bs, "span.title").text
+
+        artist = select_one_tag(bs, "a.text-with-icon.artist")
+        artist_name = artist.text.strip()
+        m = re.search(r"href=\"(/music/Artist/\d+)\"", str(artist))
+        if m is None:
+            raise MusicbookLyricPageParserError from ValueError
+        artist_link = m.groups()[0]
+
+        lyricist = select_one_tag(bs, "li:nth-child(1) > div > span").text
+        composer = select_one_tag(bs, "li:nth-child(2) > div > span").text
+
+        bs_lyric = get_source(f"https://music-book.jp/music/Lyrics/Track?artistName={artist_name}&trackTitle={title}")
+        if bs_lyric is None:
+            raise MusicbookLyricPageParserError from ConnectionError
+        lyric_lines = MusicbookLyricData.parse_raw(bs_lyric.text).lyrics
+        lyric_sections = []
+        now: list[str] = []
+        for line in lyric_lines:
+            if line == "":
+                lyric_sections.append(now)
+                now = []
+            else:
+                now.append(line)
+
+        return MusicbookLyricPage(
+            title=title,
+            page_url=parse_obj_as_url(url),
+            pageid=pageid,
+            artist=WithUrlText(text=artist_name, link=parse_obj_as_url(artist_link, base=url)),
+            composer=composer,
+            lyricist=lyricist,
+            arranger=None,
+            lyric_sections=lyric_sections,
+        )
