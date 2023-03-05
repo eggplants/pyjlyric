@@ -50,7 +50,7 @@ classifiers = [
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3 :: Only"
 ]
-description = "Japanese Lyric Extractor / Lyric Site Aggregator"
+description = "Japanese Lyric Aggregator"
 keywords = ["sample-project"]
 name = "pyjlyric"
 packages = [{include = "pyjlyric"}]
