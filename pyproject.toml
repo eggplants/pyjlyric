@@ -51,7 +51,13 @@ classifiers = [
   "Programming Language :: Python :: 3 :: Only"
 ]
 description = "Japanese Lyric Aggregator"
-keywords = ["sample-project"]
+keywords = [
+  "japanese",
+  "lyrics",
+  "download-lyrics",
+  "lyrics-scraping",
+  "japanese-songs",
+]
 name = "pyjlyric"
 packages = [{include = "pyjlyric"}]
 license = "MIT"
