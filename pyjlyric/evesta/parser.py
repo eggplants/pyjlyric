@@ -13,7 +13,7 @@ from pyjlyric.util import (
 
 from .model import EvestaLyricPage
 
-_EVESTA_PATTERN = r"^https://lyric\.evesta\.jp/(?P<pageid>l\d+)\.html$"
+_EVESTA_PATTERN = r"^https://lyric\.evesta\.jp/(?P<pageid>[a-z0-9]+)\.html$"
 
 
 class EvestaLyricPageParserError(BaseLyricPageParserError):
