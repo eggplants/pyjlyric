@@ -4,7 +4,7 @@ from typing import List, Type
 from pydantic import BaseModel, validator
 from typing_extensions import Self  # noqa: TCH002
 
-from ..model import LyricPage, WithUrlText
+from pyjlyric.model import LyricPage, WithUrlText
 
 
 class HoickLyricPage(LyricPage):

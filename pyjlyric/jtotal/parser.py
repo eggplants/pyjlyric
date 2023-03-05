@@ -2,10 +2,10 @@
 
 import re
 
+from pyjlyric.base import BaseLyricPageParser, BaseLyricPageParserError
 from pyjlyric.model import WithUrlText
+from pyjlyric.util import get_captured_value, get_source, parse_obj_as_url, select_one_tag
 
-from ..base import BaseLyricPageParser, BaseLyricPageParserError
-from ..util import get_captured_value, get_source, parse_obj_as_url, select_one_tag
 from .model import JtotalLyricPage
 
 _JTOTAL_PATTERN = r"^https://music\.j-total\.net/data/(?P<pageid>\d{3}[a-z]+/\d{3}[a-zA-Z_]+/\d{3})\.html$"

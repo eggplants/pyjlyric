@@ -2,10 +2,10 @@
 
 import re
 
+from pyjlyric.base import BaseLyricPageParser, BaseLyricPageParserError
 from pyjlyric.model import WithUrlText
+from pyjlyric.util import convert_lines_into_sections, get_captured_value, get_source, parse_obj_as_url, select_one_tag
 
-from ..base import BaseLyricPageParser, BaseLyricPageParserError
-from ..util import convert_lines_into_sections, get_captured_value, get_source, parse_obj_as_url, select_one_tag
 from .model import GakkiLyricPage
 
 _GAKKI_PATTERN = r"^https://gakufu.gakki.me/m/data/(?P<pageid>[A-Z]+\d+)\.html$"

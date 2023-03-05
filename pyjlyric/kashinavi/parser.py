@@ -4,9 +4,10 @@ import re
 
 from bs4 import BeautifulSoup, NavigableString, Tag
 
-from ..base import BaseLyricPageParser, BaseLyricPageParserError
-from ..model import WithUrlText
-from ..util import get_captured_value, get_source, parse_obj_as_url
+from pyjlyric.base import BaseLyricPageParser, BaseLyricPageParserError
+from pyjlyric.model import WithUrlText
+from pyjlyric.util import get_captured_value, get_source, parse_obj_as_url
+
 from .model import JSONLD, KashinaviLyricPage
 
 _KASHINAVI_PATTERN = r"^https://kashinavi\.com/song_view\.html\?(?P<pageid>\d+)"

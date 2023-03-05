@@ -2,10 +2,10 @@
 
 import re
 
+from pyjlyric.base import BaseLyricPageParser, BaseLyricPageParserError
 from pyjlyric.model import WithUrlText
+from pyjlyric.util import get_captured_value, get_source, parse_obj_as_url
 
-from ..base import BaseLyricPageParser, BaseLyricPageParserError
-from ..util import get_captured_value, get_source, parse_obj_as_url
 from .model import JoysoundLyricData, JoysoundLyricPage
 
 _JOYSOUND_PATTERN = r"^https://www.joysound.com/web/search/song/(?P<pageid>\d+)$"

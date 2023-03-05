@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field, HttpUrl
 
-from ..model import LyricPage, WithUrlText
+from pyjlyric.model import LyricPage, WithUrlText
 
 
 class _ByArtist(BaseModel):

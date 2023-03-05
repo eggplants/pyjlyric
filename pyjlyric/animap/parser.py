@@ -5,8 +5,9 @@ import re
 import requests
 from bs4 import BeautifulSoup
 
-from ..base import BaseLyricPageParser, BaseLyricPageParserError
-from ..util import get_captured_value, parse_obj_as_url, select_one_tag
+from pyjlyric.base import BaseLyricPageParser, BaseLyricPageParserError
+from pyjlyric.util import get_captured_value, parse_obj_as_url, select_one_tag
+
 from .model import AnimapLyricPage
 
 _ANIMAP_PATTERN = r"^http://www\.animap\.jp/kasi/showkasi\.php\?surl=(?P<pageid>(?:ani|k-)\d+(?:-\d+)*)$"

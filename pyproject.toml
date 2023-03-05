@@ -23,7 +23,6 @@ strict = true
 [tool.ruff]
 select = ["ALL"]
 ignore = [
-  "TID252", # Relative imports from parent modules are banned
   "D",
 ]
 line-length = 120

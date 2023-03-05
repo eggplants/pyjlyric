@@ -1,4 +1,4 @@
-from ..model import LyricPage
+from pyjlyric.model import LyricPage
 
 
 class JlyricLyricPage(LyricPage):

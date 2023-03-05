@@ -2,8 +2,15 @@
 
 import re
 
-from ..base import BaseLyricPageParser, BaseLyricPageParserError
-from ..util import get_captured_value, get_source, parse_obj_as_url, parse_text_with_optional_link, select_one_tag
+from pyjlyric.base import BaseLyricPageParser, BaseLyricPageParserError
+from pyjlyric.util import (
+    get_captured_value,
+    get_source,
+    parse_obj_as_url,
+    parse_text_with_optional_link,
+    select_one_tag,
+)
+
 from .model import EvestaLyricPage
 
 _EVESTA_PATTERN = r"^https://lyric\.evesta\.jp/(?P<pageid>l\d+)\.html$"

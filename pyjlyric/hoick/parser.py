@@ -2,10 +2,10 @@
 
 import re
 
+from pyjlyric.base import BaseLyricPageParser, BaseLyricPageParserError
 from pyjlyric.model import WithUrlText
+from pyjlyric.util import get_captured_value, get_source, parse_obj_as_url, select_one_tag
 
-from ..base import BaseLyricPageParser, BaseLyricPageParserError
-from ..util import get_captured_value, get_source, parse_obj_as_url, select_one_tag
 from .model import HoickLyricData, HoickLyricPage
 
 _HOICK_PATTERN = r"^https://hoick\.jp/mdb/detail/(?P<pageid>\d+)/?.*$"

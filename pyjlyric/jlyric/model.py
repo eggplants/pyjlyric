@@ -1,6 +1,6 @@
 from typing import Union
 
-from ..model import LyricPage, WithUrlText
+from pyjlyric.model import LyricPage, WithUrlText
 
 
 class JlyricLyricPage(LyricPage):

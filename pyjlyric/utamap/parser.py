@@ -2,9 +2,9 @@
 
 import re
 
-from ..base import BaseLyricPageParser, BaseLyricPageParserError
-from ..model import LyricPage
-from ..util import get_captured_value, get_source, parse_obj_as_url, select_one_tag
+from pyjlyric.base import BaseLyricPageParser, BaseLyricPageParserError
+from pyjlyric.model import LyricPage
+from pyjlyric.util import get_captured_value, get_source, parse_obj_as_url, select_one_tag
 
 _UTAMAP_PATTERN = r"^https://www\.utamap\.com/showtop\.php\?surl=(?P<pageid>\d+)$"
 

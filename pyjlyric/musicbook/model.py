@@ -2,7 +2,7 @@ from typing import List, Literal, Optional
 
 from pydantic import BaseModel, Field
 
-from ..model import LyricPage, WithUrlText
+from pyjlyric.model import LyricPage, WithUrlText
 
 
 class MusicbookLyricPage(LyricPage):
