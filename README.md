@@ -2,6 +2,8 @@
 
 [![PyPI](
   <https://img.shields.io/pypi/v/pyjlyric?color=blue>
+  ) ![Python Version](
+  <https://img.shields.io/pypi/pyversions/pyjlyric>
   )](
   <https://pypi.org/project/pyjlyric/>
 ) [![Release Package](
