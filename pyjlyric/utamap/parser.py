@@ -3,7 +3,7 @@
 import re
 
 from pyjlyric.base import BaseLyricPageParser, BaseLyricPageParserError
-from pyjlyric.model import LyricPage
+from pyjlyric.jlyric.model import JlyricLyricPage
 from pyjlyric.util import get_captured_value, get_source, parse_obj_as_url, select_one_tag
 
 _UTAMAP_PATTERN = r"^https://www\.utamap\.com/showtop\.php\?surl=(?P<pageid>\d+)$"
@@ -28,7 +28,7 @@ class UtamapLyricPageParser(BaseLyricPageParser):
         return pageid is not None
 
     @staticmethod
-    def parse(url: str) -> LyricPage:
+    def parse(url: str) -> JlyricLyricPage:
         """Parse the url page and return the result as LyricPage instance."""
         pattern = re.compile(_UTAMAP_PATTERN)
         m = re.match(pattern, url)
@@ -44,7 +44,7 @@ class UtamapLyricPageParser(BaseLyricPageParser):
         for br in lyric.select("br"):
             br.replace_with("\n")
 
-        return LyricPage(
+        return JlyricLyricPage(
             title=select_one_tag(bs, "td.kasi1").text,
             page_url=parse_obj_as_url(url),
             pageid=pageid,
