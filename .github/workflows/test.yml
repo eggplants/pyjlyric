@@ -32,13 +32,13 @@ jobs:
     - run: poetry install --no-interaction
     - name: Test
       if: ${{ runner.os == 'Windows' }}
-      run: poetry run pytest --cov-report=term
+      run: poetry run task test
     - name: Test & publish code coverage
       if: ${{ runner.os != 'Windows' && env.CC_TEST_REPORTER_ID != '' }}
       uses: paambaati/codeclimate-action@v3.2.0
       env:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
       with:
-        coverageCommand: poetry run pytest --cov=./ tests/ --cov-report xml:cov.xml --cov-report=term
+        coverageCommand: poetry run task test:ci
         coverageLocations: ${{github.workspace}}/cov.xml:coverage.py
         debug: true
