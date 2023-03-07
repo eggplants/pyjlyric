@@ -1,5 +1,5 @@
 from base64 import standard_b64decode
-from collections.abc import Generator  # noqa: TCH003
+from collections.abc import Generator
 from typing import Dict, List, Optional
 
 from pydantic import BaseModel, validator
