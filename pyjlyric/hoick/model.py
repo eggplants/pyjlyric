@@ -1,8 +1,8 @@
-from collections.abc import Iterator  # noqa: TCH003
+from collections.abc import Iterator
 from typing import List, Type
 
 from pydantic import BaseModel, validator
-from typing_extensions import Self  # noqa: TCH002
+from typing_extensions import Self
 
 from pyjlyric.model import LyricPage, WithUrlText
 
