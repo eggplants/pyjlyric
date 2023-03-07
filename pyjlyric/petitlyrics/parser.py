@@ -2,9 +2,12 @@
 
 import re
 
+from bs4 import BeautifulSoup
+from requests import session
+
 from pyjlyric.base import BaseLyricPageParser, BaseLyricPageParserError
 from pyjlyric.model import WithUrlText
-from pyjlyric.util import convert_lines_into_sections, get_captured_value, get_source, parse_obj_as_url, select_one_tag
+from pyjlyric.util import convert_lines_into_sections, get_captured_value, parse_obj_as_url, select_one_tag
 
 from .model import PetitlyricsLyricData, PetitlyricsLyricPage
 
@@ -38,10 +41,11 @@ class PetitlyricsLyricPageParser(BaseLyricPageParser):
         if pageid is None:
             raise PetitlyricsLyricPageParserError from ValueError
 
-        bs = get_source(url)
-        if bs is None:
+        sess = session()
+        res = sess.get(url)
+        if not res.ok:
             raise PetitlyricsLyricPageParserError from ConnectionError
-
+        bs = BeautifulSoup(res.text, "lxml")
         song_data_area = select_one_tag(bs, "td > div.pure-g > div.pure-u-1 > div:nth-child(1)")
 
         artist = select_one_tag(song_data_area, "p > a:nth-child(2)")
@@ -55,21 +59,24 @@ class PetitlyricsLyricPageParser(BaseLyricPageParser):
         m = re.search("(作曲\uff1a|Composer:)(?P<name>[^\u00a0]+)\u00a0", song_data_area.text)
         composer = None if m is None else get_captured_value(m, "name")
 
-        bs_ajax = get_source(
+        res = sess.get("https://petitlyrics.com/lib/pl-lib.js")
+        if not res.ok:
+            raise PetitlyricsLyricPageParserError from ConnectionError
+        m = re.search(r"'X-CSRF-Token', '(?P<csrf_token>[a-z0-9]{32})'", res.text)
+
+        res_ajax = sess.post(
             "https://petitlyrics.com/com/get_lyrics.ajax",
             data={
                 "lyrics_id": pageid,
             },
-            method="post",
             headers={
-                "Cookie": "PLSESSION=vlfik4iua1vb2d898pv4vvqbjkcpblvt",
-                "X-CSRF-Token": "3b1a3e3409715d8743233db0ad92bafa",
+                "X-CSRF-Token": get_captured_value(m, "csrf_token"),
                 "X-Requested-With": "XMLHttpRequest",
             },
         )
-        if bs_ajax is None:
+        if not res_ajax.ok:
             raise PetitlyricsLyricPageParserError from ConnectionError
-
+        bs_ajax = BeautifulSoup(res_ajax.text)
         lyric_lines = list(PetitlyricsLyricData.parse_raw(bs_ajax.text))
 
         return PetitlyricsLyricPage(
