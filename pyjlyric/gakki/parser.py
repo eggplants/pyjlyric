@@ -54,7 +54,7 @@ class GakkiLyricPageParser(BaseLyricPageParser):
             if div.get("class") is None:
                 lyric_chars.append("\n")
             else:
-                lyric_chars.extend(d.text for d in div.select("div.cd_pic.blue > div") if d.text.strip() != "")
+                lyric_chars.extend(d.text for d in div.select("div.cd_pic.blue > div") if not d.text.strip())
 
         lyric_lines = [i.replace("\n", "") for i in "\n".join(lyric_chars).strip().split("\n\n\n")]
 

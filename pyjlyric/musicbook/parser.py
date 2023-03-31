@@ -70,8 +70,8 @@ class MusicbookLyricPageParser(BaseLyricPageParser):
             page_url=parse_obj_as_url(url),
             pageid=pageid,
             artist=WithUrlText(text=artist_name, link=parse_obj_as_url(artist_link, base=url)),
-            composer=composer if composer != "-" and composer != "" else lyric_data.composer,
-            lyricist=lyricist if lyricist != "-" and lyricist != "" else lyric_data.writer,
+            composer=composer if composer != "-" and not composer else lyric_data.composer,
+            lyricist=lyricist if lyricist != "-" and not lyricist else lyric_data.writer,
             arranger=None,
             lyric_sections=convert_lines_into_sections(lyric_data.lyrics),
         )
