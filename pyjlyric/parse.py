@@ -83,6 +83,6 @@ def get_lyric_text(url: str) -> str | None:
             Composer:\t{composer or "(No data)"}
             ===
             """,
-        ).strip()
-        + (linesep + linesep).join(lyric_sections).strip()
+        )
+        + (linesep * 2).join(lyric_sections).strip()
     )
