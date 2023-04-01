@@ -112,7 +112,7 @@ def convert_lines_into_sections(lines: list[str]) -> list[list[str]]:
     lyric_sections = []
     now: list[str] = []
     for line in [*lines, ""]:
-        if line == "":
+        if not line:
             if len(now) > 0:
                 lyric_sections.append(now)
             now = []
