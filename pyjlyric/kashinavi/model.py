@@ -35,16 +35,6 @@ class _Lyrics(BaseModel):
     text: str
 
 
-class JSONLD(BaseModel):
-    _context: str = Field(..., alias="@context")
-    _type: str = Field(..., alias="@type")
-    name: str
-    recorded_as: _RecordedAs = Field(..., alias="recordedAs")
-    lyricist: _Lyricist
-    composer: _Composer
-    lyrics: _Lyrics = Field(..., alias="Lyrics")
-
-
 class KashinaviLyricPage(LyricPage):
     artist: WithUrlText
     composer: str

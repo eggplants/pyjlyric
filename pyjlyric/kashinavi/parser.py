@@ -2,13 +2,13 @@
 
 import re
 
-from bs4 import BeautifulSoup, NavigableString, Tag
+from bs4 import NavigableString
 
 from pyjlyric.base import BaseLyricPageParser, BaseLyricPageParserError
 from pyjlyric.model import WithUrlText
-from pyjlyric.util import get_captured_value, get_source, parse_obj_as_url
+from pyjlyric.util import get_captured_value, get_source, parse_obj_as_url, select_one_tag
 
-from .model import JSONLD, KashinaviLyricPage
+from .model import KashinaviLyricPage
 
 _KASHINAVI_PATTERN = r"^https://kashinavi\.com/song_view\.html\?(?P<pageid>\d+)"
 
@@ -42,23 +42,27 @@ class KashinaviLyricPageParser(BaseLyricPageParser):
         if bs is None:
             raise KashinaviLyricPageParserError from ConnectionError
 
-        jsonld_tag: Tag = bs.find_all("script", type="application/ld+json")[1]
+        artist_link = select_one_tag(bs, "body > center > p > a:nth-child(2)").get("href")
 
-        jsonld_source = jsonld_tag.text
-        jsonld = JSONLD.parse_raw(jsonld_source)
+        if not (m := re.match(r"^「(.+)」歌詞$", select_one_tag(bs, "h2").text)):
+            raise KashinaviLyricPageParserError from ValueError
+        title = m.group(1)
 
-        artist = jsonld.recorded_as.by_artist
+        detail_tag = select_one_tag(bs, "tr > td[align=right] > div:nth-child(1)")
+        if not (m := re.match(r"^歌手：(.+)作詞：(.+)作曲：(.+)$", detail_tag.text)):  # noqa: RUF001
+            raise KashinaviLyricPageParserError from ValueError
+        artist, lyricist, composer = m.groups()
 
         return KashinaviLyricPage(
-            title=jsonld.name,
+            title=title,
             page_url=parse_obj_as_url(url),
             pageid=pageid,
-            artist=WithUrlText(link=artist.url, text=artist.name),
-            composer=jsonld.composer.name,
-            lyricist=jsonld.lyricist.name,
+            artist=WithUrlText(link=artist_link, text=artist),
+            composer=composer,
+            lyricist=lyricist,
             arranger=None,
             lyric_sections=[
                 [i.text for i in section.children if isinstance(i, NavigableString)]
-                for section in BeautifulSoup(jsonld.lyrics.text, "lxml").find_all("p")
+                for section in select_one_tag(bs, "div[unselectable='on;']").find_all("p")
             ],
         )
