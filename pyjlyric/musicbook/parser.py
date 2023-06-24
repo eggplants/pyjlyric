@@ -47,7 +47,7 @@ class MusicbookLyricPageParser(BaseLyricPageParser):
         if bs is None:
             raise MusicbookLyricPageParserError from ConnectionError
 
-        title = select_one_tag(bs, ".title").text
+        title = select_one_tag(bs, "h1").text
 
         artist = select_one_tag(bs, "a.text-with-icon.artist")
         artist_name = artist.text.strip()
