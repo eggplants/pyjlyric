@@ -54,7 +54,7 @@ class JoysoundLyricPageParser(BaseLyricPageParser):
         if bs is None:
             raise JoysoundLyricPageParserError from ConnectionError
 
-        track_data = JoysoundLyricData.parse_raw(bs.text)
+        track_data = JoysoundLyricData.model_validate_json(bs.text)
 
         return JoysoundLyricPage(
             title=track_data.song_name,

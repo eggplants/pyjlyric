@@ -21,9 +21,9 @@ class LyricPage(BaseModel):
     page_url: HttpUrl
     pageid: str
 
-    artist: Union[str, WithUrlText, List[str], List[WithUrlText], None]
-    composer: Union[str, WithUrlText, List[str], List[WithUrlText], None]
-    lyricist: Union[str, WithUrlText, List[str], List[WithUrlText], None]
-    arranger: Union[str, WithUrlText, List[str], List[WithUrlText], None]
+    artist: Union[str, WithUrlText, List[str], List[WithUrlText], None] = None
+    composer: Union[str, WithUrlText, List[str], List[WithUrlText], None] = None
+    lyricist: Union[str, WithUrlText, List[str], List[WithUrlText], None] = None
+    arranger: Union[str, WithUrlText, List[str], List[WithUrlText], None] = None
 
     lyric_sections: List[_LyricSection]

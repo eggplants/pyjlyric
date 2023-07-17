@@ -6,7 +6,7 @@ from urllib.parse import urljoin
 
 import requests
 from bs4 import BeautifulSoup, Tag
-from pydantic import HttpUrl, parse_obj_as
+from pydantic import HttpUrl, TypeAdapter
 
 from pyjlyric.model import WithUrlText
 
@@ -99,7 +99,7 @@ def parse_obj_as_url(url: str, *, base: str | None = None) -> HttpUrl:
     """WIP."""
     if base is not None:
         url = urljoin(base, url)
-    return parse_obj_as(HttpUrl, url)  # type: ignore[no-any-return]
+    return TypeAdapter(HttpUrl).validate_python(url)
 
 
 def parse_text_with_optional_link(text: str, link: HttpUrl | None) -> WithUrlText | str:

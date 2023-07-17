@@ -59,7 +59,7 @@ class HoickLyricPageParser(BaseLyricPageParser):
         bs_lyric = get_source(f"https://hoick.jp/data.php?id={pageid}&type=4")
         if bs_lyric is None:
             raise HoickLyricPageParserError from ConnectionError
-        lyric_lines = HoickLyricData.parse_raw(bs_lyric.text)
+        lyric_lines = HoickLyricData.model_validate_json(bs_lyric.text)
 
         return HoickLyricPage(
             title=select_one_tag(bs, "h1.detail").text,
@@ -69,7 +69,5 @@ class HoickLyricPageParser(BaseLyricPageParser):
             composer=composers,
             lyricist=lyricists,
             arranger=None,
-            lyric_sections=[
-                section.strip().split("\r") for section in "".join(lyric_lines.__root__[:-1]).split("\r\r")
-            ],
+            lyric_sections=[section.strip().split("\r") for section in "".join(lyric_lines.root[:-1]).split("\r\r")],
         )

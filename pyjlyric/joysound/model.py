@@ -9,8 +9,8 @@ from pyjlyric.model import LyricPage, WithUrlText
 
 class JoysoundLyricPage(LyricPage):
     artist: WithUrlText
-    composer: Optional[str]
-    lyricist: Optional[str]
+    composer: Optional[str] = None
+    lyricist: Optional[str] = None
     arranger: None
 
 
@@ -96,5 +96,5 @@ class JoysoundLyricData(BaseModel):
     artist_name_foreign_sort: str = Field(..., alias="artistNameForeignSort")
     artist_dv: str = Field(..., alias="artistDv")
     myartist_flg: str = Field(..., alias="myartistFlg")
-    lyric_list: List[_LyricListItem] = Field(..., exclusiveMinimum=1, alias="lyricList")
+    lyric_list: List[_LyricListItem] = Field(..., alias="lyricList")
     outside_url_info: _OutsideUrlInfo = Field(..., alias="outsideUrlInfo")
