@@ -7,4 +7,4 @@ class UtanetLyricPage(LyricPage):
     artist: Union[str, WithUrlText]
     composer: Union[str, WithUrlText]
     lyricist: Union[str, WithUrlText]
-    arranger: Union[None, str, WithUrlText]
+    arranger: Union[None, str, WithUrlText] = None

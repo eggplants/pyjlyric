@@ -43,6 +43,8 @@ class KashinaviLyricPageParser(BaseLyricPageParser):
             raise KashinaviLyricPageParserError from ConnectionError
 
         artist_link = select_one_tag(bs, "body > center > p > a:nth-child(2)").get("href")
+        if not isinstance(artist_link, str):
+            raise KashinaviLyricPageParserError from ValueError
 
         if not (m := re.match(r"^「(.+)」歌詞$", select_one_tag(bs, "h2").text)):
             raise KashinaviLyricPageParserError from ValueError
@@ -57,7 +59,7 @@ class KashinaviLyricPageParser(BaseLyricPageParser):
             title=title,
             page_url=parse_obj_as_url(url),
             pageid=pageid,
-            artist=WithUrlText(link=artist_link, text=artist),
+            artist=WithUrlText(link=parse_obj_as_url(artist_link), text=artist),
             composer=composer,
             lyricist=lyricist,
             arranger=None,

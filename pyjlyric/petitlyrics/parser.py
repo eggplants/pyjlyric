@@ -77,7 +77,7 @@ class PetitlyricsLyricPageParser(BaseLyricPageParser):
         if not res_ajax.ok:
             raise PetitlyricsLyricPageParserError from ConnectionError
         bs_ajax = BeautifulSoup(res_ajax.text, "lxml")
-        lyric_lines = list(PetitlyricsLyricData.parse_raw(bs_ajax.text))
+        lyric_lines = list(PetitlyricsLyricData.model_validate_json(bs_ajax.text))
 
         return PetitlyricsLyricPage(
             title=select_one_tag(bs, "div.title-bar").text.strip(),
