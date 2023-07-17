@@ -63,7 +63,7 @@ class MusicbookLyricPageParser(BaseLyricPageParser):
         bs_lyric = get_source(f"https://music-book.jp/music/Lyrics/Track?artistName={artist_name}&trackTitle={title}")
         if bs_lyric is None:
             raise MusicbookLyricPageParserError from ConnectionError
-        lyric_data = MusicbookLyricData.parse_raw(bs_lyric.text)
+        lyric_data = MusicbookLyricData.model_validate_json(bs_lyric.text)
 
         return MusicbookLyricPage(
             title=title,
