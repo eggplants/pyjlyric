@@ -11,7 +11,7 @@
   )](
   <https://github.com/eggplants/pyjlyric/actions/workflows/release.yml>
 ) [![Ghcr](
-  <https://ghcr-badge.deta.dev/eggplants/pyjlyric/size>
+  <https://ghcr-badge.egpl.dev/eggplants/pyjlyric/size>
   )](
   <https://github.com/eggplants/pyjlyric/pkgs/container/pyjlyric/74193340?tag=latest>
 )
