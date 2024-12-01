@@ -6,7 +6,7 @@ __version__ = "1.1.0"
 
 
 __all__ = (
+    "Parsers",
     "__version__",
     "parse",
-    "Parsers",
 )

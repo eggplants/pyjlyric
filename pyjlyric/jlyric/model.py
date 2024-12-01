@@ -1,10 +1,10 @@
-from typing import Union
+from __future__ import annotations
 
 from pyjlyric.model import LyricPage, WithUrlText
 
 
 class JlyricLyricPage(LyricPage):
-    artist: Union[str, WithUrlText]
+    artist: str | WithUrlText
     composer: str
     lyricist: str
     arranger: None

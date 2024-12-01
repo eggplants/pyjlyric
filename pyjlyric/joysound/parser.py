@@ -1,5 +1,7 @@
 """<https://www.joysound.com>"""
 
+from __future__ import annotations
+
 import re
 
 from pyjlyric.base import BaseLyricPageParser, BaseLyricPageParserError

@@ -34,7 +34,7 @@ def test_parse_valid_url(parser: type[BaseLyricPageParser]) -> None:
         EvestaLyricPageParser,
         HoickLyricPageParser,
         MusicbookLyricPageParser,
-    ):  # FIXME: skip musicbook for now
+    ):
         pytest.skip("skip musicbook for now")
     assert parser.parse(parser._test), type(parser)  # noqa: SLF001
 

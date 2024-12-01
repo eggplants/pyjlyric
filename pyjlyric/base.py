@@ -1,4 +1,5 @@
 """Abstract classes."""
+
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
@@ -10,8 +11,7 @@ if TYPE_CHECKING:
     from .model import LyricPage
 
 
-class BaseLyricPageParserError(Exception):
-    ...
+class BaseLyricPageParserError(Exception): ...
 
 
 class BaseLyricPageParser(ABC):

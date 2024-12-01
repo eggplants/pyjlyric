@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import List, Optional
-
 from pydantic import BaseModel, Field
 
 from pyjlyric.model import LyricPage, WithUrlText
@@ -9,8 +7,8 @@ from pyjlyric.model import LyricPage, WithUrlText
 
 class JoysoundLyricPage(LyricPage):
     artist: WithUrlText
-    composer: Optional[str] = None
-    lyricist: Optional[str] = None
+    composer: str | None = None
+    lyricist: str | None = None
     arranger: None
 
 
@@ -63,7 +61,7 @@ class _OutsideUrlInfo(BaseModel):
     youtube_info: _YoutubeInfo = Field(..., alias="youtubeInfo")
     amazon_info: _AmazonInfo = Field(..., alias="amazonInfo")
     wikipedia_info: _WikipediaInfo = Field(..., alias="wikipediaInfo")
-    jsm_info: List[str] = Field(..., alias="jsmInfo")
+    jsm_info: list[str] = Field(..., alias="jsmInfo")
     field_121center_info: _Field121centerInfo = Field(..., alias="121centerInfo")
 
 
@@ -96,5 +94,5 @@ class JoysoundLyricData(BaseModel):
     artist_name_foreign_sort: str = Field(..., alias="artistNameForeignSort")
     artist_dv: str = Field(..., alias="artistDv")
     myartist_flg: str = Field(..., alias="myartistFlg")
-    lyric_list: List[_LyricListItem] = Field(..., alias="lyricList")
+    lyric_list: list[_LyricListItem] = Field(..., alias="lyricList")
     outside_url_info: _OutsideUrlInfo = Field(..., alias="outsideUrlInfo")

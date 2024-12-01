@@ -1,5 +1,6 @@
 """Pydantic models for lyric data."""
-from typing import List, Union
+
+from __future__ import annotations
 
 from pydantic import BaseModel, HttpUrl
 
@@ -11,7 +12,7 @@ class WithUrlText(BaseModel):
     text: str
 
 
-_LyricSection = List[str]
+_LyricSection = list[str]
 
 
 class LyricPage(BaseModel):
@@ -21,9 +22,9 @@ class LyricPage(BaseModel):
     page_url: HttpUrl
     pageid: str
 
-    artist: Union[str, WithUrlText, List[str], List[WithUrlText], None] = None
-    composer: Union[str, WithUrlText, List[str], List[WithUrlText], None] = None
-    lyricist: Union[str, WithUrlText, List[str], List[WithUrlText], None] = None
-    arranger: Union[str, WithUrlText, List[str], List[WithUrlText], None] = None
+    artist: str | WithUrlText | list[str] | list[WithUrlText] | None = None
+    composer: str | WithUrlText | list[str] | list[WithUrlText] | None = None
+    lyricist: str | WithUrlText | list[str] | list[WithUrlText] | None = None
+    arranger: str | WithUrlText | list[str] | list[WithUrlText] | None = None
 
-    lyric_sections: List[_LyricSection]
+    lyric_sections: list[_LyricSection]

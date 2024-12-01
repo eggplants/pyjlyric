@@ -1,4 +1,6 @@
-from typing import List, Literal, Optional
+from __future__ import annotations
+
+from typing import Literal
 
 from pydantic import BaseModel, Field
 
@@ -7,14 +9,14 @@ from pyjlyric.model import LyricPage, WithUrlText
 
 class MusicbookLyricPage(LyricPage):
     artist: WithUrlText
-    composer: Optional[str] = None
-    lyricist: Optional[str] = None
+    composer: str | None = None
+    lyricist: str | None = None
     arranger: None
 
 
 class MusicbookLyricData(BaseModel):
-    title: Optional[str] = None
-    writer: Optional[str] = None
-    composer: Optional[str] = None
-    lyrics: List[str]
-    error_code: Optional[Literal["apiCallError"]] = Field(None, alias="errorCode")
+    title: str | None = None
+    writer: str | None = None
+    composer: str | None = None
+    lyrics: list[str]
+    error_code: Literal["apiCallError"] | None = Field(None, alias="errorCode")

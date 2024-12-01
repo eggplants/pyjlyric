@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from pyjlyric.model import LyricPage
 
 
