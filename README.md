@@ -59,13 +59,15 @@ pip install pyjlyric
 
 ### CLI
 
+<!-- markdownlint-disable MD010 -->
+
 ```shellsession
 $ jrc https://j-lyric.net/artist/a00126c/l013283.html
 ===
-Title:          春よ来い
-Artist:         童謡・唱歌
-Lyric:          相馬 御風
-Composer:       弘田 龍太郎
+Title:		春よ来い
+Artist:		童謡・唱歌
+Lyric:		相馬 御風
+Composer:	弘田 龍太郎
 ===
 春よ来い早く来い
 あるきはじめたみいちゃんが
@@ -77,6 +79,8 @@ Composer:       弘田 龍太郎
 蕾もみんなふくらんで
 はよ咲きたいと待っている
 ```
+
+<!-- markdownlint-enable MD010 -->
 
 ```shellsession
 $ jrc -h
