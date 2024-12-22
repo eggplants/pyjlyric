@@ -14,6 +14,7 @@ from .jlyric.parser import JlyricLyricPageParser
 from .joysound.parser import JoysoundLyricPageParser
 from .jtotal.parser import JtotalLyricPageParser
 from .kashinavi.parser import KashinaviLyricPageParser
+from .linkcore.parser import LinkcoreLyricPageParser
 from .musicbook.parser import MusicbookLyricPageParser
 from .petitlyrics.parser import PetitlyricsLyricPageParser
 from .utamap.parser import UtamapLyricPageParser
@@ -35,6 +36,7 @@ Parsers: tuple[type[BaseLyricPageParser], ...] = (
     JoysoundLyricPageParser,
     JlyricLyricPageParser,
     JtotalLyricPageParser,
+    LinkcoreLyricPageParser,
     MusicbookLyricPageParser,
     PetitlyricsLyricPageParser,
     UtamapLyricPageParser,
