@@ -26,7 +26,7 @@ packages = [ { include = "pyjlyric" } ]
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/eggplants/pyjlyric"
-version = "1.3.0"
+version = "1.3.1"
 
 [tool.poetry.dependencies]
 python = ">=3.9,<4"
