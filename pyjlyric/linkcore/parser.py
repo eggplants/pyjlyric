@@ -55,10 +55,8 @@ class LinkcoreLyricPageParser(BaseLyricPageParser):
 
         title_h2 = select_one_tag(bs, "div.header_text > h2")
 
-        artists: list[str] = []
-        artist_a = select_one_tag(bs, "div.header_text > h3 > a")
-        if artist_a is None:
-            artists = select_one_tag(bs, "div.header_text > h3").text.split(", ")
+        artist_h3 = select_one_tag(bs, "div.header_text > h3")
+        artist_a = artist_h3.a
         artist_link = (
             None
             if artist_a is None or artist_a.href is None
@@ -82,7 +80,9 @@ class LinkcoreLyricPageParser(BaseLyricPageParser):
             title=title_h2.text,
             page_url=parse_obj_as_url(url),
             pageid=f"{albumid}-{songid}",
-            artist=artists or parse_text_with_optional_link(artist_a.text, artist_link),
+            artist=(
+                artist_h3.text.split(", ") if artist_h3 else parse_text_with_optional_link(artist_h3.text, artist_link)
+            ),
             composer=composer_p.text.split(", "),
             lyricist=lyricist_p.text.split(", "),
             arranger=None,
