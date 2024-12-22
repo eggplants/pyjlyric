@@ -30,10 +30,8 @@ def parse_args() -> Namespace:
     -------
         Namespace: argparse.Namespace
     """
-    usage = [
-        "supported sites:",
-        *[str(parser.__doc__) for parser in Parsers],
-    ]
+    usage = ["supported sites:"]
+    usage += sorted(str(parser.__doc__).replace("<", ":").replace(">", "") for parser in Parsers)
 
     parser = ArgumentParser(
         prog="jrc",

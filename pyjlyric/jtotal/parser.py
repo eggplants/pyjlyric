@@ -1,4 +1,4 @@
-"""<http://www.animap.jp>"""
+"""<https://music.j-total.net>"""
 
 from __future__ import annotations
 
@@ -18,7 +18,7 @@ class JtotalLyricPageParserError(BaseLyricPageParserError):
 
 
 class JtotalLyricPageParser(BaseLyricPageParser):
-    """http://www.animap.jp/kasi/showkasi.php?surl=<pageid>"""
+    """https://music.j-total.net/data/<pageid>.html"""
 
     _test = "https://music.j-total.net/data/004e/006_Elephant_Kashimashi/095.html"
 

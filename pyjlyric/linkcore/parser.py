@@ -5,7 +5,6 @@ from __future__ import annotations
 import re
 
 from pyjlyric.base import BaseLyricPageParser, BaseLyricPageParserError
-from pyjlyric.model import WithUrlText
 from pyjlyric.util import (
     get_captured_value,
     get_source,
@@ -83,7 +82,7 @@ class LinkcoreLyricPageParser(BaseLyricPageParser):
             title=title_h2.text,
             page_url=parse_obj_as_url(url),
             pageid=f"{albumid}-{songid}",
-            artist=artists or parse_text_with_optional_link(artist_a.text,artist_link),
+            artist=artists or parse_text_with_optional_link(artist_a.text, artist_link),
             composer=composer_p.text.split(", "),
             lyricist=lyricist_p.text.split(", "),
             arranger=None,
