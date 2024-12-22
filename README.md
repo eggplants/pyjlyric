@@ -32,7 +32,20 @@
 
 ## Supported sites
 
-<https://github.com/eggplants/pyjlyric/issues/4>
+- <http://www.animap.jp/kasi/showkasi.php?surl=:pageid>
+- <http://www.utamap.com/showtop.php?surl=:pageid>
+- <https://gakufu.gakki.me/m/data/:pageid.html>
+- <https://hoick.jp/mdb/detail/:pageid>
+- <https://j-lyric.net/artist/:artistid/:pageid.html>
+- <https://kashinavi.com/song_view.html?:pageid>
+- <https://linkco.re/:albumid/songs/:songid/lyrics>
+- <https://lyric.evesta.jp/:pageid.html>
+- <https://music-book.jp/music/Artist/:artistid/Music/:pageid>
+- <https://music.j-total.net/data/:pageid.html>
+- <https://petitlyrics.com/lyrics/:pageid>
+- <https://utaten.com/lyric/:pageid>
+- <https://www.joysound.com/web/search/song/:pageid>
+- <https://www.uta-net.com/song/:pageid>
 
 ## Installation
 
@@ -79,7 +92,20 @@ options:
   -V, --version  show program's version number and exit
 
 supported sites:
-  - ...
+  - http://www.animap.jp/kasi/showkasi.php?surl=:pageid
+  - http://www.utamap.com/showtop.php?surl=:pageid
+  - https://gakufu.gakki.me/m/data/:pageid.html
+  - https://hoick.jp/mdb/detail/:pageid
+  - https://j-lyric.net/artist/:artistid/:pageid.html
+  - https://kashinavi.com/song_view.html?:pageid
+  - https://linkco.re/:albumid/songs/:songid/lyrics
+  - https://lyric.evesta.jp/:pageid.html
+  - https://music-book.jp/music/Artist/:artistid/Music/:pageid
+  - https://music.j-total.net/data/:pageid.html
+  - https://petitlyrics.com/lyrics/:pageid
+  - https://utaten.com/lyric/:pageid
+  - https://www.joysound.com/web/search/song/:pageid
+  - https://www.uta-net.com/song/:pageid
 ```
 
 ### Library
