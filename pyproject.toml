@@ -54,16 +54,15 @@ target-version = [ 'py39' ]
 
 [tool.ruff]
 line-length = 120
-
-select = [ "ALL" ]
-ignore = [
+lint.select = [ "ALL" ]
+lint.ignore = [
   "D",
 ]
-mccabe.max-complexity = 18
-per-file-ignores."tests/test_*.py" = [
+lint.per-file-ignores."tests/test_*.py" = [
   "INP001", #  File `tests/test_pyjlyric.py` is part of an implicit namespace package. Add an `__init__.py`.
   "S101",   #  Use of assert detected
 ]
+lint.mccabe.max-complexity = 11
 
 [tool.isort]
 profile = "black"
