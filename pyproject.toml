@@ -1,42 +1,53 @@
-# poetry self add poetry-bumpversion
-
 [build-system]
 build-backend = "poetry.core.masonry.api"
 requires = [
-  "poetry-core",
+  "poetry-core>=2",
 ]
 
-[tool.poetry]
-authors = [ "eggplants <w10776e8w@yahoo.co.jp>" ]
+[project]
+name = "pyjlyric"
+version = "1.3.1"
+description = "Japanese Lyric Aggregator"
+readme = "README.md"
+keywords = [
+  "download-lyrics",
+  "japanese",
+  "japanese-songs",
+  "lyrics",
+  "lyrics-scraping",
+]
+license = { text = "MIT" }
+authors = [
+  { name = "eggplants", email = "w10776e8w@yahoo.co.jp" },
+]
+requires-python = ">=3.9,<4"
 classifiers = [
   "License :: OSI Approved :: MIT License",
-  "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Typing :: Typed",
 ]
-description = "Japanese Lyric Aggregator"
-keywords = [
-  "japanese",
-  "lyrics",
-  "download-lyrics",
-  "lyrics-scraping",
-  "japanese-songs",
+dependencies = [
+  "beautifulsoup4>=4.12.3,<5",
+  "chardet>=5.2,<6",
+  "eval-type-backport>=0.2.2,<0.3; python_version<'3.10'",
+  "lxml>=5.3,<6",
+  "pydantic>=2.10.5,<3",
+  "requests>=2.32.3,<3",
+  "typing-extensions>=4.12.2,<5",
 ]
-name = "pyjlyric"
-packages = [ { include = "pyjlyric" } ]
-license = "MIT"
-readme = "README.md"
-repository = "https://github.com/eggplants/pyjlyric"
-version = "1.3.1"
+urls.Repository = "https://github.com/eggplants/pyjlyric"
+scripts.jrc = "pyjlyric.main:main"
 
-[tool.poetry.dependencies]
-python = ">=3.9,<4"
-pydantic = "^2.0.2"
-typing-extensions = "^4.5.0"
-requests = "^2.28.2"
-beautifulsoup4 = "^4.11.2"
-lxml = ">=4.9.2,<6.0.0"
-chardet = "^5.1.0"
-eval-type-backport = { version = "^0.2.0", python = "<3.10" }
+[tool.poetry]
+requires-poetry = ">=2.0"
+packages = [
+  { include = "pyjlyric" },
+]
 
 [tool.poetry.group.dev.dependencies]
 mypy = ">=0.991,<1.15"
@@ -45,16 +56,20 @@ taskipy = "^1.10.3"
 pytest = ">=7.2.2,<9.0.0"
 pytest-cov = ">=4,<7"
 
-[tool.poetry.scripts]
-jrc = "pyjlyric.main:main"
+[tool.poetry.requires-plugins]
+poetry-plugin-shell = ">=1.0"
 
 [tool.black]
 line-length = 120
-target-version = [ 'py39' ]
+target-version = [
+  'py39',
+]
 
 [tool.ruff]
 line-length = 120
-lint.select = [ "ALL" ]
+lint.select = [
+  "ALL",
+]
 lint.ignore = [
   "D",
 ]
@@ -63,9 +78,6 @@ lint.per-file-ignores."tests/test_*.py" = [
   "S101",   #  Use of assert detected
 ]
 lint.mccabe.max-complexity = 11
-
-[tool.isort]
-profile = "black"
 
 [tool.mypy]
 pretty = true
@@ -76,14 +88,10 @@ plugins = [
   "pydantic.mypy",
 ]
 
-[tool]
-
 [tool.pydantic-mypy]
 init_forbid_extra = true
 init_typed = true
 warn_required_dynamic_aliases = true
-
-[tool.poetry_bumpversion.file."pyjlyric/__init__.py"]
 
 [tool.taskipy.tasks]
 test = "pytest --cov=pyjlyric --cov-report=term"
