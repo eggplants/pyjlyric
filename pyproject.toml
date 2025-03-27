@@ -1,12 +1,9 @@
 [build-system]
-build-backend = "poetry.core.masonry.api"
-requires = [
-  "poetry-core>=2",
-]
+build-backend = "hatchling.build"
+requires = [ "hatchling", "uv-dynamic-versioning" ]
 
 [project]
 name = "pyjlyric"
-version = "1.3.1"
 description = "Japanese Lyric Aggregator"
 readme = "README.md"
 keywords = [
@@ -17,9 +14,7 @@ keywords = [
   "lyrics-scraping",
 ]
 license = { text = "MIT" }
-authors = [
-  { name = "eggplants", email = "w10776e8w@yahoo.co.jp" },
-]
+authors = [ { name = "eggplants", email = "w10776e8w@yahoo.co.jp" } ]
 requires-python = ">=3.9,<4"
 classifiers = [
   "License :: OSI Approved :: MIT License",
@@ -31,6 +26,7 @@ classifiers = [
   "Programming Language :: Python :: 3.13",
   "Typing :: Typed",
 ]
+dynamic = [ "version" ]
 dependencies = [
   "beautifulsoup4>=4.12.3,<5",
   "chardet>=5.2,<6",
@@ -40,30 +36,28 @@ dependencies = [
   "requests>=2.32.3,<3",
   "typing-extensions>=4.12.2,<5",
 ]
+
 urls.Repository = "https://github.com/eggplants/pyjlyric"
 scripts.jrc = "pyjlyric.main:main"
 
-[tool.poetry]
-requires-poetry = ">=2.0"
-packages = [
-  { include = "pyjlyric" },
+[dependency-groups]
+dev = [
+  "mypy>=0.991,<1.15",
+  "pre-commit>=2.20,<5",
+  "pytest>=7.2.2,<9",
+  "pytest-cov>=4,<7",
+  "taskipy>=1.10.3,<2",
 ]
+docs = [ "pdoc" ]
 
-[tool.poetry.group.dev.dependencies]
-mypy = ">=0.991,<1.15"
-pre-commit = ">=2.20,<5.0"
-taskipy = "^1.10.3"
-pytest = ">=7.2.2,<9.0.0"
-pytest-cov = ">=4,<7"
+[tool.hatch.version]
+# NOTE: tool.hatch.version.source is not listed in official schema.
+# https://github.com/ninoseki/uv-dynamic-versioning/issues/21
+source = "uv-dynamic-versioning"
 
-[tool.poetry.requires-plugins]
-poetry-plugin-shell = ">=1.0"
-
-[tool.black]
-line-length = 120
-target-version = [
-  'py39',
-]
+[tool.hatch.build.targets]
+sdist.include = [ "pyjlyric" ]
+wheel.include = [ "pyjlyric" ]
 
 [tool.ruff]
 line-length = 120
@@ -74,10 +68,11 @@ lint.ignore = [
   "D",
 ]
 lint.per-file-ignores."tests/test_*.py" = [
-  "INP001", #  File `tests/test_pyjlyric.py` is part of an implicit namespace package. Add an `__init__.py`.
-  "S101",   #  Use of assert detected
+  "S101", #  Use of assert detected
 ]
 lint.mccabe.max-complexity = 11
+
+lint.pydocstyle.convention = "google"
 
 [tool.mypy]
 pretty = true
@@ -86,6 +81,12 @@ show_error_codes = true
 strict = true
 plugins = [
   "pydantic.mypy",
+]
+
+[tool.uv]
+default-groups = [
+  "dev",
+  "docs",
 ]
 
 [tool.pydantic-mypy]
@@ -98,3 +99,4 @@ test = "pytest --cov=pyjlyric --cov-report=term"
 "test:ci" = "task test --cov-report=xml:cov.xml"
 lint = "pre-commit run -a"
 profile = "python -m cProfile"
+gendoc = "pdoc pyjlyric -o ./docs --docformat google"

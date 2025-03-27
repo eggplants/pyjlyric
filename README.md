@@ -21,13 +21,13 @@
   )](
   <https://results.pre-commit.ci/latest/github/eggplants/pyjlyric/master>
 ) [![Maintainability](
-  <https://api.codeclimate.com/v1/badges/efdc16e97af8b8914ce9/maintainability>
+  <https://qlty.sh/badges/1d3588fe-b2bd-4903-b301-3bfb8064ddf3/maintainability.svg>
   )](
-  <https://codeclimate.com/github/eggplants/pyjlyric/maintainability>
-) [![Test Coverage](
-  <https://api.codeclimate.com/v1/badges/efdc16e97af8b8914ce9/test_coverage>
+  <https://qlty.sh/gh/eggplants/projects/pyjlyric>
+) [![Code Coverage](
+  <https://qlty.sh/badges/1d3588fe-b2bd-4903-b301-3bfb8064ddf3/test_coverage.svg>
   )](
-  <https://codeclimate.com/github/eggplants/pyjlyric/test_coverage>
+  <https://qlty.sh/gh/eggplants/projects/pyjlyric>
 )
 
 ## Supported sites
