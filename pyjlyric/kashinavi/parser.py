@@ -48,21 +48,21 @@ class KashinaviLyricPageParser(BaseLyricPageParser):
         if not isinstance(artist_link, str):
             raise KashinaviLyricPageParserError from ValueError
 
-        if not (m := re.match(r"^「(.+)」歌詞$", select_one_tag(bs, "h2").text)):
+        if not (m := re.match(r"^「(.+)」\s*歌詞$", select_one_tag(bs, "h2 > span:nth-child(1)").text)):
             raise KashinaviLyricPageParserError from ValueError
         title = m.group(1)
 
         detail_tag = select_one_tag(bs, "tr > td[align=right] > div:nth-child(1)")
-        print(detail_tag.text)  # noqa: T201
+
         if not (
             m := re.match(
-                r"^歌手：(.+)作詞：(.+)作曲：(.+)\n\[よみ：(.+)\]$",  # noqa: RUF001
+                r"^歌手：(.+)作詞：(.+)作曲：(.+)$",  # noqa: RUF001
                 detail_tag.text,
                 flags=re.MULTILINE,
             )
         ):
             raise KashinaviLyricPageParserError from ValueError
-        artist, lyricist, composer, _ = m.groups()
+        artist, lyricist, composer = m.groups()
 
         return KashinaviLyricPage(
             title=title,
