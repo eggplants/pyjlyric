@@ -63,6 +63,8 @@ wheel.include = [ "pyjlyric" ]
 
 [tool.ruff]
 line-length = 120
+format.indent-style = "space"
+format.quote-style = "double"
 lint.select = [
   "ALL",
 ]
