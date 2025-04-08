@@ -12,6 +12,7 @@ from pyjlyric.base import BaseLyricPageParserError
 from pyjlyric.evesta.parser import EvestaLyricPageParser
 from pyjlyric.hoick.parser import HoickLyricPageParser
 from pyjlyric.musicbook.parser import MusicbookLyricPageParser
+from pyjlyric.utamap.parser import UtamapLyricPageParser
 
 if TYPE_CHECKING:
     from pyjlyric.base import BaseLyricPageParser
@@ -34,6 +35,7 @@ def test_parse_valid_url(parser: type[BaseLyricPageParser]) -> None:
         EvestaLyricPageParser,
         HoickLyricPageParser,
         MusicbookLyricPageParser,
+        UtamapLyricPageParser,
     ):
         pytest.skip(f"skip {parser!r} for now")
     assert parser.parse(parser._test), type(parser)  # noqa: SLF001
