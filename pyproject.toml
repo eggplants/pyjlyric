@@ -31,7 +31,7 @@ dependencies = [
   "beautifulsoup4>=4.12.3,<5",
   "chardet>=5.2,<6",
   "eval-type-backport>=0.2.2,<0.3; python_version<'3.10'",
-  "lxml>=5.3,<6",
+  "lxml>=5.3,<7",
   "pydantic>=2.10.5,<3",
   "requests>=2.32.3,<3",
   "typing-extensions>=4.12.2,<5",
@@ -42,10 +42,10 @@ scripts.jrc = "pyjlyric.main:main"
 
 [dependency-groups]
 dev = [
-  "mypy>=0.991,<1.15",
+  "mypy>=0.991,<1.20",
   "pre-commit>=2.20,<5",
   "pytest>=7.2.2,<9",
-  "pytest-cov>=4,<7",
+  "pytest-cov>=4,<8",
   "taskipy>=1.10.3,<2",
   "types-beautifulsoup4>=4.12.0.20250204",
   "types-requests>=2.32.0.20250306",
