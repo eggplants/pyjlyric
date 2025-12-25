@@ -24,6 +24,7 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
   "Typing :: Typed",
 ]
 dynamic = [ "version" ]
@@ -61,6 +62,12 @@ source = "uv-dynamic-versioning"
 sdist.include = [ "pyjlyric" ]
 wheel.include = [ "pyjlyric" ]
 
+[tool.uv]
+default-groups = [
+  "dev",
+  "docs",
+]
+
 [tool.ruff]
 line-length = 120
 format.indent-style = "space"
@@ -85,12 +92,6 @@ show_error_codes = true
 strict = true
 plugins = [
   "pydantic.mypy",
-]
-
-[tool.uv]
-default-groups = [
-  "dev",
-  "docs",
 ]
 
 [tool.uv-dynamic-versioning]
