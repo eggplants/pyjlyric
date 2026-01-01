@@ -65,14 +65,15 @@ class JlyricLyricPageParser(BaseLyricPageParser):
             )
         )
 
-        composer = select_one_tag(bs, "#mnb > div.lbdy > p:nth-child(3)")
-        composer_m = re.match("^作曲\uff1a(.*)$", composer.text)
-        if composer_m is None or len(composer_m.groups()) != 1:
+        credit_p = select_one_tag(bs, "#mnb > div.lbdy > p:nth-child(2)")
+        credit_text = credit_p.text
+
+        lyricist_m = re.search(r"作詞\uff1a([^\u3000\s]+)", credit_text)
+        if lyricist_m is None or len(lyricist_m.groups()) != 1:
             raise JlyricLyricPageParserError from ValueError
 
-        lyricist = select_one_tag(bs, "#mnb > div.lbdy > p:nth-child(2)")
-        lyricist_m = re.match("^作詞\uff1a(.*)$", lyricist.text)
-        if lyricist_m is None or len(lyricist_m.groups()) != 1:
+        composer_m = re.search(r"作曲\uff1a(.+)$", credit_text)
+        if composer_m is None or len(composer_m.groups()) != 1:
             raise JlyricLyricPageParserError from ValueError
 
         lyric = select_one_tag(bs, "#Lyric")
