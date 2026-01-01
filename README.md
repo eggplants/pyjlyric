@@ -16,20 +16,6 @@
   <https://github.com/eggplants/pyjlyric/pkgs/container/pyjlyric/74193340?tag=latest>
 )
 
-[![pre-commit.ci status](
-  <https://results.pre-commit.ci/badge/github/eggplants/pyjlyric/master.svg>
-  )](
-  <https://results.pre-commit.ci/latest/github/eggplants/pyjlyric/master>
-) [![Maintainability](
-  <https://qlty.sh/badges/1d3588fe-b2bd-4903-b301-3bfb8064ddf3/maintainability.svg>
-  )](
-  <https://qlty.sh/gh/eggplants/projects/pyjlyric>
-) [![Code Coverage](
-  <https://qlty.sh/badges/1d3588fe-b2bd-4903-b301-3bfb8064ddf3/test_coverage.svg>
-  )](
-  <https://qlty.sh/gh/eggplants/projects/pyjlyric>
-)
-
 ## Supported sites
 
 - <http://www.animap.jp/kasi/showkasi.php?surl=:pageid>

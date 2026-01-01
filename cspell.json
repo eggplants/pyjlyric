@@ -1,0 +1,53 @@
+{
+  "language": "en_US",
+  "words": [
+    "animap",
+    "asyncio",
+    "beautifulsoup",
+    "certifi",
+    "colorama",
+    "docformat",
+    "euxo",
+    "evesta",
+    "gakki",
+    "jlyric",
+    "joysound",
+    "jtotal",
+    "junitxml",
+    "kashinavi",
+    "KHTML",
+    "linkcore",
+    "lxml",
+    "musicbook",
+    "pageid",
+    "pdoc",
+    "petitlyrics",
+    "pipefail",
+    "pyjlyric",
+    "pymarkdown",
+    "pymarkdownlnt",
+    "pyproject",
+    "pytest",
+    "sdist",
+    "shellsession",
+    "tomli",
+    "utamap",
+    "utanet",
+    "utaten"
+  ],
+  "dictionaries": [
+    "companies",
+    "markdown",
+    "misc",
+    "softwareTerms",
+    "useCompounds"
+  ],
+  "ignorePaths": [
+    ".gitignore",
+    ".cspell.json"
+  ],
+  "features": {
+    "weighted-suggestions": true
+  },
+  "useGitignore": true
+}

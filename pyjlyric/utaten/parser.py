@@ -65,7 +65,10 @@ class UtatenLyricPageParser(BaseLyricPageParser):
             )
         )
 
-        composer_dt = bs.find("dt", string="作曲")
+        composer_text = bs.find(string="作曲")
+        if composer_text is None:
+            raise UtatenLyricPageParserError from TypeError
+        composer_dt = composer_text.parent
         if not isinstance(composer_dt, Tag):
             raise UtatenLyricPageParserError from TypeError
 
@@ -82,7 +85,10 @@ class UtatenLyricPageParser(BaseLyricPageParser):
             )
         )
 
-        lyricist_dt = bs.find("dt", string="作詞")
+        lyricist_text = bs.find(string="作詞")
+        if lyricist_text is None:
+            raise UtatenLyricPageParserError from TypeError
+        lyricist_dt = lyricist_text.parent
         if not isinstance(lyricist_dt, Tag):
             raise UtatenLyricPageParserError from TypeError
 
@@ -99,7 +105,8 @@ class UtatenLyricPageParser(BaseLyricPageParser):
             )
         )
 
-        arranger_dt = bs.find("dt", string="編曲")
+        arranger_text = bs.find(string="編曲")
+        arranger_dt = None if arranger_text is None else arranger_text.parent
         if not isinstance(arranger_dt, Tag):
             arranger_dt = None
 
