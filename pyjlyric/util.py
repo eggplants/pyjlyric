@@ -23,7 +23,7 @@ Chrome/110.0.0.0 Safari/537.36
 )
 
 _REQUESTS_TIMEOUT = 10
-_REQUESTS_HEADERS = {
+_REQUESTS_HEADERS: dict[str, str] = {
     "User-Agent": _UA,
 }
 

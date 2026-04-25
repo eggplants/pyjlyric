@@ -1,14 +1,11 @@
 from __future__ import annotations
 
 from base64 import standard_b64decode
-from typing import TYPE_CHECKING, Annotated
+from typing import Annotated
 
 from pydantic import BaseModel, BeforeValidator, RootModel, field_validator
 
 from pyjlyric.model import LyricPage, WithUrlText
-
-if TYPE_CHECKING:
-    from collections.abc import Iterator
 
 
 class PetitlyricsLyricPage(LyricPage):
@@ -35,5 +32,4 @@ _PetitlyricsLyricDataDict = Annotated[list[str], BeforeValidator(_validate_root)
 
 
 class PetitlyricsLyricData(RootModel[_PetitlyricsLyricDataDict]):
-    def __iter__(self) -> Iterator[str]:  # type: ignore[override]
-        yield from self.root
+    pass

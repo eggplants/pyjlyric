@@ -13,7 +13,7 @@ keywords = [
   "lyrics",
   "lyrics-scraping",
 ]
-license = { text = "MIT" }
+license = "MIT"
 authors = [ { name = "eggplants", email = "w10776e8w@yahoo.co.jp" } ]
 requires-python = ">=3.10,<4"
 classifiers = [
@@ -36,7 +36,6 @@ dependencies = [
   "requests>=2.32.3,<3",
   "typing-extensions>=4.12.2,<5",
 ]
-
 urls.Repository = "https://github.com/eggplants/pyjlyric"
 scripts.jrc = "pyjlyric.main:main"
 
@@ -52,22 +51,19 @@ docs = [
   "pdoc>=16",
 ]
 
-[tool.hatch.version]
-source = "uv-dynamic-versioning"
-
-[tool.hatch.build.targets.sdist]
-include = [ "pyjlyric" ]
-
-[tool.hatch.build.targets.wheel]
-include = [ "pyjlyric" ]
+[tool.hatch]
+build.targets.sdist.include = [ "pyjlyric" ]
+build.targets.wheel.include = [ "pyjlyric" ]
+version.source = "uv-dynamic-versioning"
 
 [tool.uv]
-preview = true
+python-downloads = "never"
 default-groups = [
   "dev",
   "docs",
 ]
 exclude-newer = "P7D"
+preview = true
 
 [tool.ruff]
 line-length = 120
@@ -81,10 +77,9 @@ lint.ignore = [
   "D",
 ]
 lint.per-file-ignores."tests/test_*.py" = [
-  "S101", #  Use of assert detected
+  "S101", # Use of assert detected
 ]
 lint.mccabe.max-complexity = 11
-
 lint.pydocstyle.convention = "google"
 
 [tool.uv-dynamic-versioning]
