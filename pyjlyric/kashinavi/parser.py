@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import re
 
-from bs4 import NavigableString
+from bs4 import NavigableString, Tag
 
 from pyjlyric.base import BaseLyricPageParser, BaseLyricPageParserError
 from pyjlyric.model import WithUrlText
@@ -64,6 +64,24 @@ class KashinaviLyricPageParser(BaseLyricPageParser):
             raise KashinaviLyricPageParserError from ValueError
         artist, lyricist, composer = [i.strip() for i in m.groups()]
 
+        kashi_div = select_one_tag(bs, "div.kashi")
+        lyric_sections: list[list[str]] = []
+        current_lines: list[str] = []
+        prev_was_br = False
+        for child in kashi_div.children:
+            if isinstance(child, Tag) and child.name == "br":
+                if prev_was_br:
+                    lyric_sections.append(current_lines)
+                    current_lines = []
+                    prev_was_br = False
+                else:
+                    prev_was_br = True
+            elif isinstance(child, NavigableString) and (stripped := child.strip()):
+                prev_was_br = False
+                current_lines.append(stripped)
+        if current_lines:
+            lyric_sections.append(current_lines)
+
         return KashinaviLyricPage(
             title=title,
             page_url=parse_obj_as_url(url),
@@ -72,8 +90,5 @@ class KashinaviLyricPageParser(BaseLyricPageParser):
             composer=composer,
             lyricist=lyricist,
             arranger=None,
-            lyric_sections=[
-                [i.text for i in section.children if isinstance(i, NavigableString)]
-                for section in select_one_tag(bs, "div[unselectable='on;']").find_all("p")
-            ],
+            lyric_sections=lyric_sections,
         )
