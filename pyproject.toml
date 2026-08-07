@@ -52,9 +52,9 @@ docs = [
 ]
 
 [tool.hatch]
-build.targets.sdist.include = [ "pyjlyric" ]
-build.targets.wheel.include = [ "pyjlyric" ]
 version.source = "uv-dynamic-versioning"
+build.targets.wheel.include = [ "pyjlyric" ]
+build.targets.sdist.include = [ "pyjlyric" ]
 
 [tool.uv]
 python-downloads = "never"

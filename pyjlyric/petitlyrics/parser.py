@@ -65,6 +65,8 @@ class PetitlyricsLyricPageParser(BaseLyricPageParser):
         if not res.ok:
             raise PetitlyricsLyricPageParserError from ConnectionError
         m = re.search(r"'X-CSRF-Token', '(?P<csrf_token>[a-z0-9]{32})'", res.text)
+        if m is None:
+            raise PetitlyricsLyricPageParserError from ValueError
 
         res_ajax = sess.post(
             "https://petitlyrics.com/com/get_lyrics.ajax",
@@ -72,7 +74,7 @@ class PetitlyricsLyricPageParser(BaseLyricPageParser):
                 "lyrics_id": pageid,
             },
             headers={
-                "X-CSRF-Token": get_captured_value(m, "csrf_token"),
+                "X-CSRF-Token": m.group("csrf_token"),
                 "X-Requested-With": "XMLHttpRequest",
             },
         )
