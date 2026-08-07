@@ -47,7 +47,7 @@ class UtatenLyricPageParser(BaseLyricPageParser):
         if pageid is None:
             raise UtatenLyricPageParserError from ValueError
 
-        bs = get_source(url)
+        bs = get_source(url, timeout=30)
         if bs is None:
             raise UtatenLyricPageParserError from ConnectionError
 
@@ -72,7 +72,7 @@ class UtatenLyricPageParser(BaseLyricPageParser):
         if not isinstance(composer_dt, Tag):
             raise UtatenLyricPageParserError from TypeError
 
-        composer_dd = composer_dt.findNext("dd")
+        composer_dd = composer_dt.find_next("dd")
         if not isinstance(composer_dd, Tag):
             raise UtatenLyricPageParserError from TypeError
 
@@ -92,7 +92,7 @@ class UtatenLyricPageParser(BaseLyricPageParser):
         if not isinstance(lyricist_dt, Tag):
             raise UtatenLyricPageParserError from TypeError
 
-        lyricist_dd = lyricist_dt.findNext("dd")
+        lyricist_dd = lyricist_dt.find_next("dd")
         if not isinstance(lyricist_dd, Tag):
             raise UtatenLyricPageParserError from TypeError
 
@@ -110,7 +110,7 @@ class UtatenLyricPageParser(BaseLyricPageParser):
         if not isinstance(arranger_dt, Tag):
             arranger_dt = None
 
-        arranger_dd = None if arranger_dt is None else lyricist_dt.findNext("dd")
+        arranger_dd = None if arranger_dt is None else lyricist_dt.find_next("dd")
         if not isinstance(arranger_dd, Tag):
             arranger_dd = None
 

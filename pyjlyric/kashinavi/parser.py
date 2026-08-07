@@ -12,7 +12,7 @@ from pyjlyric.util import get_captured_value, get_source, parse_obj_as_url, sele
 
 from .model import KashinaviLyricPage
 
-_KASHINAVI_PATTERN = r"^https://kashinavi\.com/song_view\.html\?(?P<pageid>\d+)"
+_KASHINAVI_PATTERN = r"^https://kashinavi\.com/lyrics/(?P<pageid>\d+)/?$"
 
 
 class KashinaviLyricPageParserError(BaseLyricPageParserError):
@@ -20,9 +20,9 @@ class KashinaviLyricPageParserError(BaseLyricPageParserError):
 
 
 class KashinaviLyricPageParser(BaseLyricPageParser):
-    """https://kashinavi.com/song_view.html?<pageid>"""
+    """https://kashinavi.com/lyrics/<pageid>/"""
 
-    _test = "https://kashinavi.com/song_view.html?155779"
+    _test = "https://kashinavi.com/lyrics/155779/"
 
     @staticmethod
     def is_valid_url(url: str) -> bool:
@@ -44,31 +44,35 @@ class KashinaviLyricPageParser(BaseLyricPageParser):
         if bs is None:
             raise KashinaviLyricPageParserError from ConnectionError
 
-        artist_link = select_one_tag(bs, "body > center > p > a:nth-child(2)").get("href")
+        overflow_div = select_one_tag(bs, "div[style*='overflow:hidden']")
+
+        h2_span = select_one_tag(overflow_div, "h2 > span")
+        title = re.sub(r"^「|」歌詞$", "", h2_span.text.strip()).strip()
+
+        artist_a = select_one_tag(overflow_div, "a[href*='/artist/']")
+        artist_link = artist_a.get("href")
         if not isinstance(artist_link, str):
             raise KashinaviLyricPageParserError from ValueError
+        artist_text = artist_a.text.strip()
 
-        h2_tag = select_one_tag(bs, "h2")
-        title = h2_tag.text.strip()
+        detail_inner = select_one_tag(overflow_div, "div")
+        lyricist = ""
+        composer = ""
+        for span in detail_inner.select("span"):
+            text = span.text.strip()
+            if text.startswith("作詞："):
+                lyricist = text[3:].strip()
+            elif text.startswith("作曲："):
+                composer = text[3:].strip()
 
-        detail_tag = select_one_tag(bs, "div[style*='text-align:right'] > div[style*='text-align:left']")
-
-        detail_text = detail_tag.text
-        if not (
-            m := re.match(
-                r"^歌手：(.+?)作詞：(.+?)作曲：(.+)$",  # noqa: RUF001
-                detail_text,
-                flags=re.DOTALL,
-            )
-        ):
+        if not lyricist or not composer:
             raise KashinaviLyricPageParserError from ValueError
-        artist, lyricist, composer = [i.strip() for i in m.groups()]
 
-        kashi_div = select_one_tag(bs, "div.kashi")
+        lyric_div = select_one_tag(bs, "div[style*='user-select:none']")
         lyric_sections: list[list[str]] = []
         current_lines: list[str] = []
         prev_was_br = False
-        for child in kashi_div.children:
+        for child in lyric_div.children:
             if isinstance(child, Tag) and child.name == "br":
                 if prev_was_br:
                     lyric_sections.append(current_lines)
@@ -86,7 +90,7 @@ class KashinaviLyricPageParser(BaseLyricPageParser):
             title=title,
             page_url=parse_obj_as_url(url),
             pageid=pageid,
-            artist=WithUrlText(link=parse_obj_as_url(artist_link), text=artist),
+            artist=WithUrlText(link=parse_obj_as_url(artist_link, base=url), text=artist_text),
             composer=composer,
             lyricist=lyricist,
             arranger=None,

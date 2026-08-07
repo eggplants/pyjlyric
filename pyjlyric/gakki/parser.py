@@ -40,7 +40,7 @@ class GakkiLyricPageParser(BaseLyricPageParser):
         if pageid is None:
             raise GakkiLyricPageParserError from ValueError
 
-        bs = get_source(url)
+        bs = get_source(url, verify=False)
         if bs is None:
             raise GakkiLyricPageParserError from ConnectionError
         m = re.match(r"^作詞\s(?P<lyricist>.*)\s作曲\s(?P<composer>.*)$", select_one_tag(bs, "div.info > p.data").text)

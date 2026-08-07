@@ -56,6 +56,8 @@ def get_source(
     method: Literal["get", "post"] | None = "get",
     headers: dict[str, str] | None = None,
     parser: str | None = "lxml",
+    timeout: int | None = None,
+    verify: bool = True,
 ) -> BeautifulSoup | None:
     """Get the source as a BeautifulSoup object.
 
@@ -70,11 +72,12 @@ def get_source(
         parsed source data of web page
     """
     headers = _REQUESTS_HEADERS if headers is None else dict(_REQUESTS_HEADERS, **headers)
+    _timeout = _REQUESTS_TIMEOUT if timeout is None else timeout
 
     if method is None or method == "get":
-        res = requests.get(url, data=data, timeout=_REQUESTS_TIMEOUT, headers=headers)
+        res = requests.get(url, data=data, timeout=_timeout, headers=headers, verify=verify)
     elif method == "post":
-        res = requests.post(url, data=data, timeout=_REQUESTS_TIMEOUT, headers=headers)
+        res = requests.post(url, data=data, timeout=_timeout, headers=headers, verify=verify)
     else:
         raise ValueError(method)
 
