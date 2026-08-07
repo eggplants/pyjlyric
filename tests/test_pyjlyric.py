@@ -10,8 +10,10 @@ from pyjlyric import Parsers
 from pyjlyric.animap.parser import AnimapLyricPageParser
 from pyjlyric.base import BaseLyricPageParserError
 from pyjlyric.evesta.parser import EvestaLyricPageParser
+from pyjlyric.gakki.parser import GakkiLyricPageParser
 from pyjlyric.hoick.parser import HoickLyricPageParser
 from pyjlyric.musicbook.parser import MusicbookLyricPageParser
+from pyjlyric.petitlyrics.parser import PetitlyricsLyricPageParser
 from pyjlyric.utamap.parser import UtamapLyricPageParser
 
 if TYPE_CHECKING:
@@ -33,8 +35,10 @@ def test_parse_valid_url(parser: type[BaseLyricPageParser]) -> None:
     if parser in (
         AnimapLyricPageParser,
         EvestaLyricPageParser,
+        GakkiLyricPageParser,
         HoickLyricPageParser,
         MusicbookLyricPageParser,
+        PetitlyricsLyricPageParser,
         UtamapLyricPageParser,
     ):
         pytest.skip(f"skip {parser!r} for now")
