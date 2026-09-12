@@ -7,4 +7,4 @@ class UtanetLyricPage(LyricPage):
     artist: str | WithUrlText
     composer: str | WithUrlText
     lyricist: str | WithUrlText
-    arranger: None | str | WithUrlText = None
+    arranger: str | WithUrlText | None = None
