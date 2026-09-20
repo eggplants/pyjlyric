@@ -49,7 +49,7 @@ dependencies = [
 urls.Documentation = "https://egpl.dev/pyjlyric/"
 urls.Issues = "https://github.com/eggplants/pyjlyric/issues"
 urls.Repository = "https://github.com/eggplants/pyjlyric"
-scripts.jrc = "pyjlyric.main:main"
+scripts.jrc = "pyjlyric.cli:main"
 
 [dependency-groups]
 dev = [
