@@ -15,7 +15,7 @@ class WithUrlText(BaseModel):
 _LyricSection = list[str]
 
 
-class LyricPage(BaseModel):
+class LyricPage(BaseModel, frozen=True):
     """WIP."""
 
     title: str
